@@ -1,1 +1,20 @@
 # Zadani semestralni prace z Progtestu
+Klasická hra Bomberman
+
+Implementujte následující varianty:
+
+pro alespoň 2 hráče na jednom počítači
+pro hru proti počítači
+Hra musí splňovat následující funkcionality:
+
+Načítání herních levelů (mapy) ze souboru (vytvořte vhodný formát)
+Sbírání konfigurovatelných bonusů (zvětšení plamenu, více bomb, odpalování bomb na dálku,...)
+Ukládání nejlepšího dosaženého skóre do souboru
+Kde lze využít polymorfismus? (doporučené)
+
+Ovládání hráčů: lokální hráč, umělá inteligence (různé druhy), síťový hráč
+Uživatelské rozhraní: konzolové, ncurses, SDL, OpenGL (různé druhy),...
+Efekty bonusů a nemocí: zvětšení plamenu, zvýšení počtu bomb,...
+Další informace
+
+https://en.wikipedia.org/wiki/Bomberman

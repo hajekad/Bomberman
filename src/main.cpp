@@ -1,22 +1,15 @@
-#include <iostream>
-#include <ncurses.h>
+#include "gameLoop.hpp"
 
 using namespace std;
 
-
-
 int main()
 {
-  bool escapeSequence = 1;
-
-  initscr();
+  CGameLoop session;
   
-  while(escapeSequence)
-  {
-    
+  initscr();
 
-    refresh();
-  }
+  session.start();
+
   endwin();
 
   return 0;
