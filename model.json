@@ -1,0 +1,591 @@
+{
+  "entities": [
+    {
+      "name": "Ccell",
+      "parent": null,
+      "attr": [
+        {
+          "name": "unbreakable",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "destryable_obstacle",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 750.8888874053955,
+        "y": 191.49999237060547,
+        "width": 141.7784309387207,
+        "height": 55.222238540649414
+      }
+    },
+    {
+      "name": "Ccharacter",
+      "parent": null,
+      "attr": [
+        {
+          "name": "move()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "perish()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 988.8888874053955,
+        "y": 79.49999237060547,
+        "width": 280.71997451782227,
+        "height": 317
+      }
+    },
+    {
+      "name": "Cenemy",
+      "parent": "Ccharacter",
+      "attr": [
+        {
+          "name": "special_action()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "move()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 69,
+        "y": 84.22220420837402,
+        "width": 101,
+        "height": 55.22220420837402
+      }
+    },
+    {
+      "name": "Cmain",
+      "parent": null,
+      "attr": [
+        {
+          "name": "picklevel()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "createworld()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "render_outpur()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 581.8888874053955,
+        "y": 369.49999237060547,
+        "width": 130.25601196289062,
+        "height": 69.22221183776855
+      }
+    },
+    {
+      "name": "Cnpc",
+      "parent": "Ccharacter",
+      "attr": [
+        {
+          "name": "player_interact()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "move()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 57,
+        "y": 249.22220420837402,
+        "width": 126.71997451782227,
+        "height": 55.22220420837402
+      }
+    },
+    {
+      "name": "Cplayer",
+      "parent": "Ccharacter",
+      "attr": [
+        {
+          "name": "score",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "use_weapon()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "get_input()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 56,
+        "y": 156.22220420837402,
+        "width": 131.25088500976562,
+        "height": 69.22227954864502
+      }
+    },
+    {
+      "name": "Csickness",
+      "parent": null,
+      "attr": [
+        {
+          "name": "string name",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "effect()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 1356.8888874053955,
+        "y": 133.49999237060547,
+        "width": 132.25016403198242,
+        "height": 55.22222137451172
+      }
+    },
+    {
+      "name": "Cweapon",
+      "parent": null,
+      "attr": [
+        {
+          "name": "range",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "explosion_pattern",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "cooldown",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 1339.8888874053955,
+        "y": 251.49999237060547,
+        "width": 154.52135467529297,
+        "height": 69.22221183776855
+      }
+    },
+    {
+      "name": "Cworld",
+      "parent": null,
+      "attr": [
+        {
+          "name": "map{cell}",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "loadscore()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        },
+        {
+          "name": "cworld()",
+          "primary": false,
+          "unique": false,
+          "nullable": false
+        }
+      ],
+      "transform": {
+        "x": 579.8888874053955,
+        "y": 173.49999237060547,
+        "width": 113.79998779296875,
+        "height": 69.22224521636963
+      }
+    },
+    {
+      "name": "Flevel",
+      "parent": null,
+      "attr": [],
+      "transform": {
+        "x": 496.8888874053955,
+        "y": 383.49999237060547,
+        "width": 39.96534729003906,
+        "height": 27.22222328186035
+      }
+    },
+    {
+      "name": "Fscore",
+      "parent": null,
+      "attr": [],
+      "transform": {
+        "x": 492.8888874053955,
+        "y": 210.49999237060547,
+        "width": 44.74829864501953,
+        "height": 27.22222328186035
+      }
+    }
+  ],
+  "relations": [
+    [
+      {
+        "entity": "Ccharacter",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 988.8888874053955,
+            "y": 219.21093790233135,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 940.7781028747559,
+              "y": 219.16102477163076
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Ccell",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": "occupied by",
+        "transform": {
+          "anchor": {
+            "x": 892.6673183441162,
+            "y": 219.11111164093018,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 940.7781028747559,
+              "y": 219.16102477163076
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Csickness",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 1356.8888874053955,
+            "y": 161.11110305786133,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 1313.2488746643066,
+              "y": 160.8055477142334
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Ccharacter",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 1269.6088619232178,
+            "y": 160.49999237060547,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 1313.2488746643066,
+              "y": 160.8055477142334
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Cweapon",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 1339.8888874053955,
+            "y": 286.11109828948975,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 1258.0143299102783,
+              "y": 284.7222173213959
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Cplayer",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 1176.1397724151611,
+            "y": 283.333336353302,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 1258.0143299102783,
+              "y": 284.7222173213959
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Cworld",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 634.3888874053955,
+            "y": 242.7222375869751,
+            "edge": 2
+          },
+          "points": [
+            {
+              "x": 634.744062423706,
+              "y": 306.1111149787903
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Cmain",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 635.0992374420166,
+            "y": 369.49999237060547,
+            "edge": 0
+          },
+          "points": [
+            {
+              "x": 634.744062423706,
+              "y": 306.1111149787903
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Cworld",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 693.6888751983643,
+            "y": 219.10972457681783,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 722.2888813018799,
+              "y": 219.11040952580515
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Ccell",
+        "identifying": true,
+        "optional": false,
+        "cardinality": 0,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 750.8888874053955,
+            "y": 219.11109447479248,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 722.2888813018799,
+              "y": 219.11040952580515
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Flevel",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 536.8542346954346,
+            "y": 400.7222156524658,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 559.371561050415,
+              "y": 400.7222194671631
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Cmain",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 581.8888874053955,
+            "y": 400.72222328186035,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 559.371561050415,
+              "y": 400.7222194671631
+            }
+          ],
+          "manual": false
+        }
+      }
+    ],
+    [
+      {
+        "entity": "Fscore",
+        "identifying": false,
+        "optional": false,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 537.637186050415,
+            "y": 227.72221565246582,
+            "edge": 1
+          },
+          "points": [
+            {
+              "x": 558.7630367279053,
+              "y": 228.11108493804932
+            }
+          ],
+          "manual": false
+        }
+      },
+      {
+        "entity": "Cworld",
+        "identifying": false,
+        "optional": true,
+        "cardinality": 1,
+        "xor": null,
+        "name": null,
+        "transform": {
+          "anchor": {
+            "x": 579.8888874053955,
+            "y": 228.4999542236328,
+            "edge": 3
+          },
+          "points": [
+            {
+              "x": 558.7630367279053,
+              "y": 228.11108493804932
+            }
+          ],
+          "manual": false
+        }
+      }
+    ]
+  ],
+  "notes": []
+}
