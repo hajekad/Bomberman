@@ -1,7 +1,5 @@
 #include "gameLoop.hpp"
 
-using namespace std;
-
 int main()
 {
   CGameLoop session;
@@ -9,6 +7,8 @@ int main()
   initscr();
 
   session.start();
+
+  session.mainThread();
 
   endwin();
 

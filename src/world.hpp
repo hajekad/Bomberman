@@ -1,11 +1,13 @@
-#include <map>
+#pragma once
+
+#include <vector>
 #include "cell.hpp"
 
 class CWorld
 {
 private:
-    /* data */
+    std::vector<std::vector<CCell>> worlMap;
 public:
-    CWorld(/* args */);
+    CWorld(const char * sourceFile);
     ~CWorld();
 };

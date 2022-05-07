@@ -7,16 +7,30 @@ void CGameLoop::start()
     running = 1;
     inMenu = 1;
     getch();
- 
 }
 
 void CGameLoop::mainThread()
 {
     while(running)
     {
-        if(inMenu)
-        {
-            
-        }
+/*
+        //getInput();
+
+        if(inMenu) gameMenu.update();
+        else currMap.update();
+*/
+        if(inMenu) gameMenu.render(running, inMenu);
+        else render();
     }
+
+    //delete gameMenu;
+}
+
+void CGameLoop::render()
+{
+    clear();
+    move(5, 5);
+    printw
+    ("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n■ 🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱⛩🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱■\n■ 🧱      👩‍🦯          📦    📦🤱📦          📦   📦         🧱■\n             ■ 🧱  🧱📦🧱  🧱  🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱   🧱■\n■ 🧱📦                          📦    📦   📦               🧱■\n     ■ 🧱🧱  🧱  🧱📦🧱  🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱🥵🧱  🧱 🧱■\n■ 🧱  📦              📦📦      📦         📦               🧱■\n         ■ 🧱  🧱  🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱   🧱■\n■ 🧱    📦          📦          📦       📦        📦       🧱■\n■ 🧱🧱  🧱🧟‍♂️🧱  🧱  🧱🥵🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱 🧱■\n■ 🧱        📦            📦    📦      📦         📦       🧱■\n■ 🧱  🧱  🧱  🧱📦🧱  🧱  🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱   🧱■\n■ 🧱    📦          📦🧟‍♂️📦        📦        📦       📦     🧱■\n                                                           ■ 🧱🧱  🧱📦🧱  🧱  🧱  🧱📦🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱 🧱■\n■ 🧱  📦      📦                                 🦄         🧱■\n■ 🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🚪🧱🧱🧱🧱🧱■\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n");
+    getch();
 }
