@@ -2,9 +2,13 @@
 
 #include <ncurses.h>
 #include <unistd.h>
+#include <cstring>
+#include <string>
+#include <chrono>
+#include <thread>
 
 #include "menu.hpp"
-//#include "world.hpp"
+#include "world.hpp"
 
 class CGameLoop
 {
@@ -12,12 +16,16 @@ class CGameLoop
         bool running;
         bool inMenu;
         CMenu gameMenu;
-        //CWorld * currMap;
+        CWorld * currMap;
 
     public:
-        void start();
+        CGameLoop();
 
-        void mainThread();
+        char getInput(WINDOW * _w);
 
-        void render();
+        void start(WINDOW * _w);
+
+        void mainThread(WINDOW * _w);
+
+        void render(WINDOW * _w);
 };

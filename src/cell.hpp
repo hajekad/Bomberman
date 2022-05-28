@@ -1,9 +1,15 @@
 #pragma once
 
+#include <memory>
 #include "character.hpp"
+#include "player.hpp"
+//#include "enemy.hpp"
+//#include "npc.hpp"
 
 class CCell
 {
+public:
+    char texture;
 private:
     enum state
     {
@@ -11,8 +17,9 @@ private:
         UNBREAKABLE,
         DESTROYABLE
     };
-    CCharacter * occupiedBy;
+
+    std::shared_ptr<CCharacter> occupiedBy;
 public:
-    CCell(/* args */);
+    CCell(char _c);
     ~CCell();
 };

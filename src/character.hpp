@@ -1,23 +1,21 @@
 #pragma once
 
-#include "player.hpp"
-#include "npc.hpp"
-#include "enemy.hpp"
+#include <ctype.h>
 
 class CCharacter
 {
+public:
+    char skin;
 private:
-    enum characterType
+    enum cT
     {
         PLAYER,
         NPC,
         ENEMY
-    }; 
+    };
 
 public:
-    CCharacter();
+    cT characterType; 
+    CCharacter(char _s);
     ~CCharacter();
-
-    virtual void move();
-    virtual void perish();
 };

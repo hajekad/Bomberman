@@ -1,36 +1,107 @@
 #include "gameLoop.hpp"
 
-void CGameLoop::start()
+char CGameLoop::getInput(WINDOW * _w)
 {
-    move(20, 20);
-    printw("BOMBERMAN\n\tpress any button to start\n");
+    char ret;
+    ret = wgetch(_w);
+    if(ret != ERR) return ret;
+    return 0;
+}
+
+CGameLoop::CGameLoop()
+{
+    currMap = nullptr;
+}
+
+void CGameLoop::start(WINDOW * _w)
+{
+    wmove(_w, 1, getmaxx(_w)/2 - 4);
+    wprintw(_w, "BOMBERMAN");
+    wmove(_w, 2, getmaxx(_w)/2 - 13);
+    wprintw(_w, "press any button to start");
+
+    refresh();
+    wrefresh(_w);
+
     running = 1;
     inMenu = 1;
-    getch();
+    wgetch(_w);
 }
 
-void CGameLoop::mainThread()
+void CGameLoop::mainThread(WINDOW * _w)
 {
+    std::chrono::time_point<std::chrono::system_clock> t = std::chrono::system_clock::now();
+
     while(running)
     {
-/*
-        //getInput();
+        cbreak();
 
-        if(inMenu) gameMenu.update();
-        else currMap.update();
-*/
-        if(inMenu) gameMenu.render(running, inMenu);
-        else render();
+        if(inMenu)
+        {
+            if(currMap != nullptr) delete currMap;
+
+            gameMenu.render(_w);
+            
+            char tmp = 0;
+
+            while(tmp == 0)
+            {
+                tmp = getInput(_w);
+                if(tmp == 'n')
+                {
+                    inMenu = 0;
+                    currMap = new CWorld(_w);
+                }
+                else if(tmp == 'f')
+                {
+                    inMenu = 0;
+                    int map = 1;
+                    currMap = new CWorld(map, _w);
+                }
+                else if(tmp == 'e') running = 0;
+            }
+        }
+        else
+        {
+            char _in = getInput(_w);
+
+            if(_in == 27) inMenu = 1; // 27 == ESC
+
+            if(_in != '0') currMap->update(_in);
+            
+            render(_w);
+        }
+
+        t += std::chrono::milliseconds(50);
+        std::this_thread::sleep_until(t);
     }
-
-    //delete gameMenu;
 }
 
-void CGameLoop::render()
+void CGameLoop::render(WINDOW * _w)
 {
-    clear();
-    move(5, 5);
-    printw
-    ("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n■ 🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱⛩🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱■\n■ 🧱      👩‍🦯          📦    📦🤱📦          📦   📦         🧱■\n             ■ 🧱  🧱📦🧱  🧱  🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱   🧱■\n■ 🧱📦                          📦    📦   📦               🧱■\n     ■ 🧱🧱  🧱  🧱📦🧱  🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱🥵🧱  🧱 🧱■\n■ 🧱  📦              📦📦      📦         📦               🧱■\n         ■ 🧱  🧱  🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱   🧱■\n■ 🧱    📦          📦          📦       📦        📦       🧱■\n■ 🧱🧱  🧱🧟‍♂️🧱  🧱  🧱🥵🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱  🧱 🧱■\n■ 🧱        📦            📦    📦      📦         📦       🧱■\n■ 🧱  🧱  🧱  🧱📦🧱  🧱  🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱   🧱■\n■ 🧱    📦          📦🧟‍♂️📦        📦        📦       📦     🧱■\n                                                           ■ 🧱🧱  🧱📦🧱  🧱  🧱  🧱📦🧱📦🧱  🧱  🧱  🧱  🧱  🧱  🧱 🧱■\n■ 🧱  📦      📦                                 🦄         🧱■\n■ 🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🧱🚪🧱🧱🧱🧱🧱■\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n");
-    getch();
+    wclear(_w);
+    box(_w, 0, 0);
+
+    int foo = 0;
+
+    int x = 1;
+    int y = 1;
+    
+    for(auto i = currMap->worldMap.begin(); i != currMap->worldMap.end(); i++)
+    {
+        foo++;
+        for(auto j = i->begin(); j != i->end(); j++)
+        {
+            wmove(_w, y, x);
+            char _c[1];
+            _c[0] = (*j).texture;
+            wprintw(_w, _c);
+            x++;
+        }
+        y++;
+        x = 1;
+    }
+    
+    refresh();
+    wrefresh(_w);
 }

@@ -6,9 +6,18 @@ int main()
   
   initscr();
 
-  session.start();
+  int y, x;
+  getmaxyx(stdscr, y, x);
 
-  session.mainThread();
+  WINDOW * win = newwin(y, 70, 0, x/4);
+  box(win, 0, 0);
+  refresh();
+  wrefresh(win);
+  cbreak();
+
+  session.start(win);
+
+  session.mainThread(win);
 
   endwin();
 

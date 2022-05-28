@@ -9,12 +9,12 @@
 class CMenu
 {  
 public:
-    CMenu();
-    ~CMenu();
+    //CMenu();
+    //~CMenu();
 
     //CWorld * loadLevel();
-    int pickLevel();
-    void render(bool & running, bool & inMenu);
-    void newGame();
+    //int pickLevel();
+    void render(WINDOW * _w);
+    //void newGame();
 };
 

@@ -1,17 +1,36 @@
 #include "menu.hpp"
 
-void CMenu::render(bool & running, bool & inMenu)
+void CMenu::render(WINDOW * _w)
 {
-    clear();
+    wclear(_w);
     
-    move(10,20);
-    printw
+    box(_w, 0, 0);
+    
+    wmove(_w, 1, getmaxx(_w)/2 - 4);
+    wprintw
     (
-        "BOMBERMAN\n\tNew game[N]\tLoad file[F]\n\t\t EXIT[e]"
+        _w,
+        "BOMBERMAN"
     );
-    
-    char ret = getch();
-    
-    if(ret == 'e') running = 0;
-    else if(ret == 'n' || ret == 'f') inMenu = 0;
+    wmove(_w, 2, getmaxx(_w)/2 - 5);
+    wprintw
+    (
+        _w,
+        "New game[N]"
+    );
+    wmove(_w, 3, getmaxx(_w)/2 - 6);
+    wprintw
+    (
+        _w,
+        "Load file[F]"
+    );
+    wmove(_w, 4, getmaxx(_w)/2 - 4);
+    wprintw
+    (
+        _w,
+        "EXIT[e]"
+    );
+
+    refresh();
+    wrefresh(_w);
 }

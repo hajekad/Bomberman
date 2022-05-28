@@ -1,7 +1,7 @@
 #pragma once
 
 #include "character.hpp"
-#include "weapon.hpp"
+//#include "weapon.hpp"
 
 class CPlayer : public CCharacter
 {
@@ -10,8 +10,8 @@ private:
     int speed;
 
 public:
+    CPlayer(char _s);
+
     void placeBomb();
     void useSecond();
-    void move()override;
-    void perish()override;
 };
