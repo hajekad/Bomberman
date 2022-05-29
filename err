@@ -1,0 +1,20 @@
+==10711== Memcheck, a memory error detector
+==10711== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==10711== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==10711== Command: ./a.out
+==10711== 
+==10711== 
+==10711== HEAP SUMMARY:
+==10711==     in use at exit: 72,123 bytes in 111 blocks
+==10711==   total heap usage: 137 allocs, 26 frees, 165,954 bytes allocated
+==10711== 
+==10711== LEAK SUMMARY:
+==10711==    definitely lost: 0 bytes in 0 blocks
+==10711==    indirectly lost: 0 bytes in 0 blocks
+==10711==      possibly lost: 0 bytes in 0 blocks
+==10711==    still reachable: 72,123 bytes in 111 blocks
+==10711==         suppressed: 0 bytes in 0 blocks
+==10711== Rerun with --leak-check=full to see details of leaked memory
+==10711== 
+==10711== For lists of detected and suppressed errors, rerun with: -s
+==10711== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

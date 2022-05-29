@@ -2,8 +2,10 @@
 
 char CGameLoop::getInput(WINDOW * _w)
 {
+    cbreak();
     char ret;
     ret = wgetch(_w);
+    flushinp();
     if(ret != ERR) return ret;
     return 0;
 }

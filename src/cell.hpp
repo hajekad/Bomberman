@@ -6,19 +6,21 @@
 //#include "enemy.hpp"
 //#include "npc.hpp"
 
+enum state
+{
+    FREE,
+    OCCUPIED,
+    UNBREAKABLE,
+    DESTROYABLE
+};
+
 class CCell
 {
 public:
     char texture;
-private:
-    enum state
-    {
-        OCCUPIED,
-        UNBREAKABLE,
-        DESTROYABLE
-    };
-
+    state currState;
     std::shared_ptr<CCharacter> occupiedBy;
+private:
 public:
     CCell(char _c);
     ~CCell();
