@@ -4,7 +4,7 @@ CCell::CCell(char _c)
 {
     texture = _c;
 
-    if(isalpha(_c))
+    if(_c == '1')
     {
         occupiedBy = std::make_shared<CPlayer>(_c);
         currState = OCCUPIED;

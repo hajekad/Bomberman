@@ -7,77 +7,43 @@ CWorld::CWorld(WINDOW * _w)
 
 void CWorld::update(char _i)
 {
-    switch(_i)
+    for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
-        case 'w': break;
-
-        case 'a': break;
-
-        case 's': break;
-
-        case 'd': break;
-
-        default:  return;
-    }
-
-    std::shared_ptr<CCharacter> player;
-    int col = 0;
-    int line = 0;
-    bool esc = 0;
-    std::vector<CCell>::iterator prev;
-
-    auto it = worldMap.begin();
-    it++;
-
-    for(; it != worldMap.end(); it++)
-    {
-        line++;
-
-        col = 0;
-        auto jt = it->begin();
-        jt++;
-        for(; jt != it->end(); jt++)
+        switch(_i)
         {
-            col++;
-            if(jt->texture == '1')
-            {
-                player = jt->occupiedBy;
-                prev = jt;
-                esc = 1;
-                break;
-            }
+            case 'w': break;
+            case 'a': break;
+            case 's': break;
+            case 'd': break;
+            case 'H': break;
+
+            default:  return;
         }
-        if(esc == 1) break;
-    }
 
-    switch(_i)
-    {
-        case 'w':
-            line--;
-            break;
+        int newLine = (*_ic).get()->line;
+        int newCol = _ic->get()->column;
 
-        case 'a':
-            col--;
-            break;
+        switch(_i)
+        {
+            case 'w': newLine--; break;
+            case 'a': newCol--; break;
+            case 's': newLine++; break;
+            case 'd': newCol++; break;
 
-        case 's':
-            line++;
-            break;
+            default: return;
+        }
 
-        case 'd':
-            col++;
-            break;
+        if(worldMap.at(newLine).at(newCol).currState == FREE)
+        {
+            worldMap.at(newLine).at(newCol).occupiedBy = *_ic;
+            worldMap.at(newLine).at(newCol).texture = '1';
 
-        default:
-            return;
-    }
+            worldMap.at(_ic->get()->line).at(_ic->get()->column).occupiedBy = nullptr;
+            worldMap.at(_ic->get()->line).at(_ic->get()->column).texture = ' ';
 
-    if(esc && (worldMap.at(line).at(col).currState == FREE))
-    {
-        worldMap.at(line).at(col).occupiedBy = player;
-        worldMap.at(line).at(col).texture = '1';    
-        prev->occupiedBy = nullptr;
-        prev->texture = ' ';
+            _ic->get()->line = newLine;
+            _ic->get()->column = newCol;
+        }
     }
 }
 
@@ -97,21 +63,34 @@ CWorld::CWorld(int sourceFile, WINDOW * _w)
     std::vector<CCell> currLine;
 
     std::string line;
-    
+
+    int _l = 0;
     while(getline(fileStream, line))
     {
         auto end = line.end();
         auto copy = end;
         copy--;
 
+        int _c = 0;
         for(auto i = line.begin(); i != end; i++)
         {
             foo++;
-            currLine.push_back(CCell(*i));
+
+            CCell currCell = CCell(*i);
+
+            if(currCell.currState == OCCUPIED)
+            {
+                currCell.occupiedBy->line = _l;
+                currCell.occupiedBy->column = _c;
+                characters.push_back(currCell.occupiedBy);
+            }
+            currLine.push_back(currCell);
             if(i == copy) worldMap.push_back(currLine);
+            _c++;
         }
         line.clear();
         currLine.clear();
+        _l++;
     }
 }
 

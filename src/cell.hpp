@@ -20,6 +20,7 @@ public:
     char texture;
     state currState;
     std::shared_ptr<CCharacter> occupiedBy;
+    
 private:
 public:
     CCell(char _c);

@@ -6,6 +6,7 @@ class CCharacter
 {
 public:
     char skin;
+    int line, column;
 private:
     enum cT
     {
