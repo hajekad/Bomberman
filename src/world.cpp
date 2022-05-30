@@ -19,9 +19,10 @@ void CWorld::update(char _i)
 
             default:  return;
         }
-
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
+
+        if(_ic->get()->characterType != PLAYER) _ic->get()->decideNextMove(_i);
 
         switch(_i)
         {

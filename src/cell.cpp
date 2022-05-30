@@ -4,10 +4,19 @@ CCell::CCell(char _c)
 {
     texture = _c;
 
-    if(_c == '1')
+    if(_c == 'P')
     {
         occupiedBy = std::make_shared<CPlayer>(_c);
         currState = OCCUPIED;
+    }
+    else if(_c == 'E')
+    {
+        occupiedBy = std::make_shared<CEnemy>(_c);
+        currState = OCCUPIED;
+    }
+    else if(_c == 'N')
+    {
+
     }
     else
     {

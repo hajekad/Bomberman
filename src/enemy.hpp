@@ -1,17 +1,22 @@
 #pragma once
 
+#include <random>
+#include <time.h>
 #include "character.hpp"
 
 class CEnemy : public CCharacter
 {
 private:
-    int damage;
+    char skin;
     int hp;
     int speed;
     
 public:
+    CEnemy(char _s);
+
     void attack(CCharacter & toAttack);
+
+    void decideNextMove(char & _i);
     
-    void move()override;
-    void perish()override;
+    void receiveDmg(int _d);
 };
