@@ -1,5 +1,5 @@
-output: main.o cell.o world.o gameLoop.o menu.o character.o player.o
-	g++ -Wall --pedantic main.o cell.o world.o gameLoop.o menu.o character.o player.o -lncurses
+output: main.o cell.o world.o gameLoop.o menu.o character.o player.o enemy.o
+	g++ -Wall --pedantic main.o cell.o world.o gameLoop.o menu.o character.o player.o enemy.o -lncurses
 
 main.o: src/main.cpp
 	g++ -Wall --pedantic -c src/main.cpp
@@ -21,6 +21,9 @@ character.o: src/character.cpp src/character.hpp
 
 player.o: src/player.cpp src/player.hpp
 	g++ -Wall --pedantic -c src/player.cpp -lncurses
+
+enemy.o: src/enemy.cpp src/enemy.hpp
+	g++ -Wall --pedantic -c src/enemy.cpp -lncurses
 
 clean:
 	rm *.o output
