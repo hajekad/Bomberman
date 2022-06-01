@@ -18,13 +18,16 @@ void CEnemy::attack(CCharacter & toAttack)
 
 void CEnemy::decideNextMove(char & _i)
 {
-    srand( (unsigned)time(NULL) );
+    //srand( time() );
 
-    int rndm = std::rand() % 15;
+    //int rndm = std::rand() % 15;
+    int rndm = 0;
 
     if(rndm == 0)
     {
         int dir = std::rand() % 4;
+
+        std::cerr << "Direction: " << dir << std::endl;
 
         switch(dir)
         {
@@ -33,15 +36,15 @@ void CEnemy::decideNextMove(char & _i)
                 break;
 
             case 1:
-                _i = 'w';
+                _i = 'd';
                 break;
 
             case 2:
-                _i = 'w';
+                _i = 's';
                 break;
 
             case 3:
-                _i = 'w';
+                _i = 'a';
                 break;
 
             default:

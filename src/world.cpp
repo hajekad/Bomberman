@@ -7,22 +7,17 @@ CWorld::CWorld(WINDOW * _w)
 
 void CWorld::update(char _i)
 {
+    std::cerr << "update" << std::endl;
+
+    int k = 0;
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
-        switch(_i)
-        {
-            case 'w': break;
-            case 'a': break;
-            case 's': break;
-            case 'd': break;
-            case 'H': break;
-
-            default:  return;
-        }
+        k++;
+        std::cerr << k << std::endl;
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
 
-        if(_ic->get()->characterType != PLAYER) _ic->get()->decideNextMove(_i);
+        _ic->get()->decideNextMove(_i);
 
         switch(_i)
         {
@@ -31,7 +26,7 @@ void CWorld::update(char _i)
             case 's': newLine++; break;
             case 'd': newCol++; break;
 
-            default: return;
+            default: break;
         }
 
         if(worldMap.at(newLine).at(newCol).currState == FREE)
@@ -45,6 +40,7 @@ void CWorld::update(char _i)
             _ic->get()->line = newLine;
             _ic->get()->column = newCol;
         }
+        if(_ic->get()->characterType == PLAYER) _i = 'H';
     }
 }
 
@@ -66,6 +62,7 @@ CWorld::CWorld(int sourceFile, WINDOW * _w)
     std::string line;
 
     int _l = 0;
+    int help = 0;
     while(getline(fileStream, line))
     {
         auto end = line.end();
@@ -84,6 +81,8 @@ CWorld::CWorld(int sourceFile, WINDOW * _w)
                 currCell.occupiedBy->line = _l;
                 currCell.occupiedBy->column = _c;
                 characters.push_back(currCell.occupiedBy);
+                help++;
+                std::cerr <<"HELP"<< help << std::endl;
             }
             currLine.push_back(currCell);
             if(i == copy) worldMap.push_back(currLine);

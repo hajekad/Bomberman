@@ -3,11 +3,12 @@
 char CGameLoop::getInput(WINDOW * _w)
 {
     cbreak();
+    wtimeout(_w, 0);
     char ret;
     ret = wgetch(_w);
     flushinp();
     if(ret != ERR) return ret;
-    return 0;
+    return 'H';
 }
 
 CGameLoop::CGameLoop()
@@ -36,7 +37,7 @@ void CGameLoop::mainThread(WINDOW * _w)
 
     while(running)
     {
-        cbreak();
+        //cbreak();
 
         if(inMenu)
         {
@@ -69,7 +70,7 @@ void CGameLoop::mainThread(WINDOW * _w)
 
             if(_in == 27) inMenu = 1; // 27 == ESC
 
-            if(_in != '0') currMap->update(_in);
+            currMap->update(_in);
             
             render(_w);
         }

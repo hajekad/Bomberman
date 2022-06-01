@@ -16,7 +16,7 @@ CCell::CCell(char _c)
     }
     else if(_c == 'N')
     {
-
+        currState = FREE;
     }
     else
     {

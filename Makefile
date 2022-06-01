@@ -26,4 +26,4 @@ enemy.o: src/enemy.cpp src/enemy.hpp
 	g++ -Wall --pedantic -c src/enemy.cpp -lncurses
 
 clean:
-	rm *.o output
+	rm *.o output a.out out err
