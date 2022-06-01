@@ -14,4 +14,6 @@ public:
 
     void placeBomb();
     void useSecond();
+    
+    void decideNextMove(char & _i);
 };

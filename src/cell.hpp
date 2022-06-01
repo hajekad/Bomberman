@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "character.hpp"
+//#include "character.hpp"
 #include "player.hpp"
 #include "enemy.hpp"
 //#include "npc.hpp"

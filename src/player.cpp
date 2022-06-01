@@ -15,3 +15,8 @@ void CPlayer::useSecond()
 {
 
 }
+
+void CPlayer::decideNextMove(char & _i)
+{
+    return;
+}
