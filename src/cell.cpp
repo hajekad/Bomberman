@@ -30,5 +30,5 @@ CCell::CCell(char _c)
 
 CCell::~CCell()
 {
-    
+    if(occupiedBy.use_count() == 0) delete occupiedBy.get();
 }

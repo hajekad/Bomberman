@@ -98,7 +98,15 @@ void CGameLoop::render(WINDOW * _w)
             wmove(_w, y, x);
             char _c[1];
             _c[0] = j->texture;
-            wprintw(_w, _c);
+            if(j->currState == OCCUPIED)
+            {
+                start_color();
+                init_pair(2, COLOR_BLACK, COLOR_BLUE);
+                wattron(_w,COLOR_PAIR(2));
+                waddch(_w, _c[0]);
+                wattroff(_w,COLOR_PAIR(2));
+            }
+            else wprintw(_w, _c);
             x++;
         }
         y++;

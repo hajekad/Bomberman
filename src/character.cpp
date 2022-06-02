@@ -11,5 +11,4 @@ CCharacter::CCharacter(char _s)
 
 CCharacter::~CCharacter()
 {
-
 }

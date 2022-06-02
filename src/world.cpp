@@ -33,9 +33,11 @@ void CWorld::update(char _i)
         {
             worldMap.at(newLine).at(newCol).occupiedBy = *_ic;
             worldMap.at(newLine).at(newCol).texture = _ic->get()->skin;
+            worldMap.at(newLine).at(newCol).currState = OCCUPIED;
 
             worldMap.at(_ic->get()->line).at(_ic->get()->column).occupiedBy = nullptr;
             worldMap.at(_ic->get()->line).at(_ic->get()->column).texture = ' ';
+            worldMap.at(_ic->get()->line).at(_ic->get()->column).currState = FREE;
 
             _ic->get()->line = newLine;
             _ic->get()->column = newCol;
@@ -94,7 +96,8 @@ CWorld::CWorld(int sourceFile, WINDOW * _w)
     }
 }
 
-
+/*
 CWorld::~CWorld()
 {
 }
+*/

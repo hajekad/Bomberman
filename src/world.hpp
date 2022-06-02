@@ -23,5 +23,5 @@ public:
 
     void update(char _i);
     
-    ~CWorld();
+    //~CWorld();
 };

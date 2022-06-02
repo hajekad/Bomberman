@@ -19,5 +19,5 @@ public:
     virtual void decideNextMove(char & _i) = 0;
 
     CCharacter(char _s);
-    ~CCharacter();
+    virtual ~CCharacter();
 };
