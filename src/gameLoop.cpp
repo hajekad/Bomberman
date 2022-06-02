@@ -41,8 +41,6 @@ void CGameLoop::mainThread(WINDOW * _w)
 
         if(inMenu)
         {
-            if(currMap != nullptr) delete currMap;
-
             gameMenu.render(_w);
             
             char tmp = 0;
@@ -54,11 +52,13 @@ void CGameLoop::mainThread(WINDOW * _w)
                 {
                     inMenu = 0;
                     currMap = new CWorld(_w);
+                    if(currMap != nullptr) delete currMap;
                 }
                 else if(tmp == 'f')
                 {
                     inMenu = 0;
                     int map = 1;
+                    if(currMap != nullptr) delete currMap;
                     currMap = new CWorld(map, _w);
                 }
                 else if(tmp == 'e') running = 0;
@@ -68,8 +68,10 @@ void CGameLoop::mainThread(WINDOW * _w)
         {
             char _in = getInput(_w);
 
-            if(_in == 27) inMenu = 1; // 27 == ESC
-
+            if(_in == 27)
+            {
+                inMenu = 1; // 27 == ESC
+            }
             currMap->update(_in);
             
             render(_w);
@@ -78,6 +80,7 @@ void CGameLoop::mainThread(WINDOW * _w)
         t += std::chrono::milliseconds(50);
         std::this_thread::sleep_until(t);
     }
+    if(currMap != nullptr) delete currMap;
 }
 
 void CGameLoop::render(WINDOW * _w)
