@@ -21,6 +21,9 @@ public:
 
     cT characterType;
 
+    int hist[5];
+    int iH;
+
     virtual void decideNextMove(char & _i, int playerAtCol, int playerAtLine) = 0;
 
     CCharacter(char _s);

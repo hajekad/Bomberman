@@ -31,6 +31,10 @@ int CWorld::update(char _i)
             default: break;
         }
 
+        _ic->get()->hist[(_ic->get()->iH)] = newCol + newLine;
+        (_ic->get()->iH)++;
+        (_ic->get()->iH) %= 5;
+
         if((worldMap.at(newLine).at(newCol).currState == FREE) && ((newLine != _ic->get()->line) || newCol != _ic->get()->column))
         {
             worldMap.at(newLine).at(newCol).occupiedBy = *_ic;

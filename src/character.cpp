@@ -8,9 +8,10 @@ CCharacter::CCharacter(char _s)
 
     if(characterType == NPC && _s != 'N') characterType = ENEMY;
 
-    speed = std::rand() % 10 + 4;
+    speed = std::rand() % 5 + 4;
 
     stayed = false;
+    iH = 0;
 }
 
 CCharacter::~CCharacter()

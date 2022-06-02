@@ -11,11 +11,14 @@ class CEnemy : public CCharacter
 private:
     char skin;
     int hp;
+    int panicCnt;
 
 public:
     CEnemy(char _s);
 
     void attack(CCharacter & toAttack);
+
+    bool onePlace();
 
     void decideNextMove(char & _i, int playerAtCol, int playerAtLine);
     
