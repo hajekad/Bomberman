@@ -1,29 +1,43 @@
-output: main.o cell.o world.o gameLoop.o menu.o character.o player.o enemy.o
-	g++ -Wall --pedantic main.o cell.o world.o gameLoop.o menu.o character.o player.o enemy.o -lncurses
+PROG		:= BOMBERMAN
+
+CXX 		:= g++
+
+LD_FLAGS 	:= -Wall --pedantic -std=c++14
+CXX_FLAGS	:= $(LD_FLAGS) -c
+
+OBJS 		:= main.o cell.o world.o gameLoop.o menu.o character.o player.o enemy.o
+
+SRC_DIRS := ./src
+
+SRCS := $(shell find $(SRC_DIRS) -name '*.cpp')
+HDRS := $(shell find $(SRC_DIRS) -name '*.hpp')
+ 
+output: $(OBJS)
+	$(CXX) $(LD_FLAGS) -o $(PROG) $(OBJS) -lncurses
 
 main.o: src/main.cpp
-	g++ -Wall --pedantic -c src/main.cpp
+	$(CXX) $(CXX_FLAGS) src/main.cpp
 
 world.o: src/world.cpp src/world.hpp
-	g++ -Wall --pedantic -c src/world.cpp -lncurses
+	$(CXX) $(CXX_FLAGS) src/world.cpp
 
 cell.o: src/cell.cpp src/cell.hpp
-	g++ -Wall --pedantic -c src/cell.cpp -lncurses
+	$(CXX) $(CXX_FLAGS) src/cell.cpp
 
 gameLoop.o: src/gameLoop.cpp src/gameLoop.hpp 
-	g++ -Wall --pedantic -c src/gameLoop.cpp -lncurses
+	$(CXX) $(CXX_FLAGS) src/gameLoop.cpp
 
 menu.o: src/menu.cpp src/menu.hpp
-	g++ -Wall --pedantic -c src/menu.cpp -lncurses
+	$(CXX) $(CXX_FLAGS) src/menu.cpp
 
 character.o: src/character.cpp src/character.hpp
-	g++ -Wall --pedantic -c src/character.cpp -lncurses
+	$(CXX) $(CXX_FLAGS) src/character.cpp
 
 player.o: src/player.cpp src/player.hpp
-	g++ -Wall --pedantic -c src/player.cpp -lncurses
+	$(CXX) $(CXX_FLAGS) src/player.cpp
 
 enemy.o: src/enemy.cpp src/enemy.hpp
-	g++ -Wall --pedantic -c src/enemy.cpp -lncurses
+	$(CXX) $(CXX_FLAGS) src/enemy.cpp
 
 clean:
-	rm *.o output a.out out err
+	rm *.o BOMBERMAN out err
