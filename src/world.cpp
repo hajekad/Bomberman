@@ -44,7 +44,10 @@ int CWorld::update(char _i)
             _ic->get()->line = newLine;
             _ic->get()->column = newCol;
         }
-        else _ic->get()->stayed = 1;
+        else if((worldMap.at(newLine).at(newCol).currState == OCCUPIED)
+                && ((newLine != _ic->get()->line) || newCol != _ic->get()->column)
+                && (worldMap.at(newLine).at(newCol).occupiedBy.get()->characterType == PLAYER)) return 1;
+
         if(_ic->get()->characterType == PLAYER) _i = 'H';
     }
     return 0;

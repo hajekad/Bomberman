@@ -72,7 +72,7 @@ void CGameLoop::mainThread(WINDOW * _w)
             {
                 inMenu = 1; // 27 == ESC
             }
-            currMap->update(_in);
+            if(currMap->update(_in)) inMenu = 1;
             
             render(_w);
         }
