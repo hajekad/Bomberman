@@ -7,13 +7,13 @@ CWorld::CWorld(WINDOW * _w)
 
 void CWorld::update(char _i)
 {
-    std::cerr << "update" << std::endl;
+    //std::cerr << "update" << std::endl;
 
     int k = 0;
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
         k++;
-        std::cerr << k << std::endl;
+        //std::cerr << k << std::endl;
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
 
@@ -29,10 +29,10 @@ void CWorld::update(char _i)
             default: break;
         }
 
-        if(worldMap.at(newLine).at(newCol).currState == FREE)
+        if((worldMap.at(newLine).at(newCol).currState == FREE) && ((newLine != _ic->get()->line) || newCol != _ic->get()->column))
         {
             worldMap.at(newLine).at(newCol).occupiedBy = *_ic;
-            worldMap.at(newLine).at(newCol).texture = '1';
+            worldMap.at(newLine).at(newCol).texture = _ic->get()->skin;
 
             worldMap.at(_ic->get()->line).at(_ic->get()->column).occupiedBy = nullptr;
             worldMap.at(_ic->get()->line).at(_ic->get()->column).texture = ' ';
@@ -82,7 +82,7 @@ CWorld::CWorld(int sourceFile, WINDOW * _w)
                 currCell.occupiedBy->column = _c;
                 characters.push_back(currCell.occupiedBy);
                 help++;
-                std::cerr <<"HELP"<< help << std::endl;
+                //std::cerr <<"HELP"<< help << std::endl;
             }
             currLine.push_back(currCell);
             if(i == copy) worldMap.push_back(currLine);

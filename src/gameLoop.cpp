@@ -97,7 +97,7 @@ void CGameLoop::render(WINDOW * _w)
         {
             wmove(_w, y, x);
             char _c[1];
-            _c[0] = (*j).texture;
+            _c[0] = j->texture;
             wprintw(_w, _c);
             x++;
         }

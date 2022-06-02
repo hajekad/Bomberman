@@ -20,14 +20,13 @@ void CEnemy::decideNextMove(char & _i)
 {
     //srand( time() );
 
-    //int rndm = std::rand() % 15;
-    int rndm = 0;
+    int rndm = std::rand() % 6;
 
     if(rndm == 0)
     {
         int dir = std::rand() % 4;
 
-        std::cerr << "Direction: " << dir << std::endl;
+        //std::cerr << "Direction: " << dir << std::endl;
 
         switch(dir)
         {
