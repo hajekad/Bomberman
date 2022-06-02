@@ -21,7 +21,7 @@ public:
     CWorld(WINDOW * _w);
     CWorld(int sourceFile, WINDOW * _w);
 
-    void update(char _i);
+    int update(char _i);
     
     //~CWorld();
 };

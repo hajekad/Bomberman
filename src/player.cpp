@@ -16,7 +16,7 @@ void CPlayer::useSecond()
 
 }
 
-void CPlayer::decideNextMove(char & _i)
+void CPlayer::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
 {
     return;
 }

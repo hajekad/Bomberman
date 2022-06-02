@@ -7,6 +7,10 @@ CCharacter::CCharacter(char _s)
     isalpha(_s) ? characterType = PLAYER : characterType = NPC;
 
     if(characterType == NPC && _s != 'N') characterType = ENEMY;
+
+    speed = std::rand() % 10 + 4;
+
+    stayed = false;
 }
 
 CCharacter::~CCharacter()

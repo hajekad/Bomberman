@@ -15,5 +15,5 @@ public:
     void placeBomb();
     void useSecond();
     
-    void decideNextMove(char & _i);
+    void decideNextMove(char & _i, int playerAtCol, int playerAtLine);
 };

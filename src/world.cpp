@@ -5,11 +5,13 @@ CWorld::CWorld(WINDOW * _w)
     CWorld( std::rand() % 2, _w);
 }
 
-void CWorld::update(char _i)
+int CWorld::update(char _i)
 {
     //std::cerr << "update" << std::endl;
 
     int k = 0;
+    int playerAtLine = characters.begin()->get()->line;
+    int playerAtCol = characters.begin()->get()->column;
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
         k++;
@@ -17,7 +19,7 @@ void CWorld::update(char _i)
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
 
-        _ic->get()->decideNextMove(_i);
+        _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine);
 
         switch(_i)
         {
@@ -42,8 +44,10 @@ void CWorld::update(char _i)
             _ic->get()->line = newLine;
             _ic->get()->column = newCol;
         }
+        else _ic->get()->stayed = 1;
         if(_ic->get()->characterType == PLAYER) _i = 'H';
     }
+    return 0;
 }
 
 CWorld::CWorld(int sourceFile, WINDOW * _w)
