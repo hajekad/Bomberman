@@ -8,8 +8,21 @@ CWorld::CWorld(WINDOW * _w)
 int CWorld::update(char _i)
 {
     //std::cerr << "update" << std::endl;
-
+    if(_i == 'e')
+    {
+        CPlayer * player = (CPlayer *) characters.begin()->get();
+        player->placeBomb(worldMap.at(player->line).at(player->column));
+    }
     int k = 0;
+    CPlayer * player = (CPlayer *) characters.begin()->get();
+    if(player->currBomb != nullptr) if(player->currBomb->update())
+    {
+        worldMap.at(player->currBomb->line).at(player->currBomb->column).bomb = nullptr;
+        worldMap.at(player->currBomb->line).at(player->currBomb->column).currState = FREE;
+
+        player->currBomb = nullptr;
+        player->placedBomb = 1;
+    }
     int playerAtLine = characters.begin()->get()->line;
     int playerAtCol = characters.begin()->get()->column;
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)

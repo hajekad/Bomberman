@@ -109,6 +109,14 @@ void CGameLoop::render(WINDOW * _w)
                 waddch(_w, _c[0]);
                 wattroff(_w,COLOR_PAIR(2));
             }
+            else if(j->bomb != nullptr)
+            {
+                start_color();
+                init_pair(2, COLOR_BLACK, COLOR_RED);
+                wattron(_w,COLOR_PAIR(2));
+                waddch(_w, _c[0]);
+                wattroff(_w,COLOR_PAIR(2));
+            }
             else wprintw(_w, _c);
             x++;
         }

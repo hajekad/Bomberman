@@ -4,11 +4,19 @@ CPlayer::CPlayer(char _s) : CCharacter(_s)
 {
     damage = 1;
     speed = 1;
+    placedBomb = 1;
+    currBomb = nullptr;
 }
 
-void CPlayer::placeBomb()
+void CPlayer::placeBomb(CCell & _c)
 {
-
+    if(placedBomb)
+    {
+        _c.currState = BOMB;
+        _c.bomb = std::make_shared<CWeapon>(5,5,line, column);
+        currBomb = _c.bomb;
+        placedBomb = 0;
+    }
 }
 
 void CPlayer::useSecond()
