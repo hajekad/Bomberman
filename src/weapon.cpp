@@ -20,7 +20,7 @@ bool CWeapon::update()
     return 0;
 }
 
-std::vector<std::pair<int, int>> CWeapon::explode()
+std::vector<std::pair<int, int>> CWeapon::explode(int _lC, int _cC)
 {
     std::vector<std::pair<int, int>> ret;
 
@@ -28,13 +28,17 @@ std::vector<std::pair<int, int>> CWeapon::explode()
 
     for(int i = 1; i < range; i++)
     {
-        ret.push_back(std::make_pair(line - i, column));
+        if((line - i) > 0)
+            ret.push_back(std::make_pair(line - i, column));
 
-        ret.push_back(std::make_pair(line + i, column));
+        if((line + i) < _lC)
+            ret.push_back(std::make_pair(line + i, column));
         
-        ret.push_back(std::make_pair(line, column - i));
+        if((column - i) > 0)
+            ret.push_back(std::make_pair(line, column - i));
         
-        ret.push_back(std::make_pair(line, column + i));
+        if((column + i) < _cC)
+            ret.push_back(std::make_pair(line, column + i));
     }
 
     return ret;

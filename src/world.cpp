@@ -47,7 +47,7 @@ int CWorld::update(char _i)
 
     if(player->currBomb != nullptr) if(player->currBomb->update())
     {
-        std::vector<std::pair<int, int>> toAttack = player->currBomb->explode();
+        std::vector<std::pair<int, int>> toAttack = player->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
 
         destroy(toAttack);
 

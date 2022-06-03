@@ -26,5 +26,5 @@ public:
     
     bool update();
 
-   std::vector<std::pair<int, int>> explode();
+   std::vector<std::pair<int, int>> explode(int _lC, int _cC);
 };
