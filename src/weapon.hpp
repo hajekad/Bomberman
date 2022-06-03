@@ -1,7 +1,13 @@
 #pragma once
 
+#include <vector>
+#include <utility>
 #include <chrono>
 #include <thread>
+
+//#include "world.hpp"
+
+//class CWorld;
 
 class CWeapon
 {
@@ -19,4 +25,6 @@ public:
     void change(int _r, int _t);
     
     bool update();
+
+   std::vector<std::pair<int, int>> explode();
 };

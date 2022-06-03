@@ -5,6 +5,35 @@ CWorld::CWorld(WINDOW * _w)
     CWorld( std::rand() % 2, _w);
 }
 
+void CWorld::destroy(std::vector<std::pair<int, int>> & _d)
+{
+    for(auto i = _d.begin(); i != _d.end(); i++)
+    {
+        CCell * _c = &(worldMap.at(i->first).at(i->second));
+        
+        if(_c->currState == OCCUPIED)
+        {
+            for(auto j = characters.begin(); j != characters.end(); j++)
+            {
+                if(_c->occupiedBy == *j)
+                {
+                    characters.erase(j);
+                    break;
+                }
+            }
+
+            _c->currState = FREE;
+            _c->occupiedBy = nullptr;
+            _c->texture = ' ';
+        }
+        else if(_c->currState == DESTROYABLE)
+        {
+            _c->currState = FREE;
+            _c->texture = ' ';
+        }
+    }
+}
+
 int CWorld::update(char _i)
 {
     if(_i == 'e')
@@ -18,6 +47,10 @@ int CWorld::update(char _i)
 
     if(player->currBomb != nullptr) if(player->currBomb->update())
     {
+        std::vector<std::pair<int, int>> toAttack = player->currBomb->explode();
+
+        destroy(toAttack);
+
         worldMap.at(player->currBomb->line).at(player->currBomb->column).bomb = nullptr;
         worldMap.at(player->currBomb->line).at(player->currBomb->column).currState = FREE;
 

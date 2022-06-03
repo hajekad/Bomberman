@@ -19,3 +19,23 @@ bool CWeapon::update()
     
     return 0;
 }
+
+std::vector<std::pair<int, int>> CWeapon::explode()
+{
+    std::vector<std::pair<int, int>> ret;
+
+    ret.push_back(std::make_pair(line, column));
+
+    for(int i = 1; i < range; i++)
+    {
+        ret.push_back(std::make_pair(line - i, column));
+
+        ret.push_back(std::make_pair(line + i, column));
+        
+        ret.push_back(std::make_pair(line, column - i));
+        
+        ret.push_back(std::make_pair(line, column + i));
+    }
+
+    return ret;
+}

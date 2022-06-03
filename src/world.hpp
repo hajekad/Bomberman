@@ -9,6 +9,9 @@
 #include <ncurses.h>
 
 #include "cell.hpp"
+//#include "weapon.hpp"
+
+//class CWeapon;
 
 //#define RAND_MAX 1
 
@@ -22,6 +25,8 @@ public:
     CWorld(WINDOW * _w);
 
     CWorld(int sourceFile, WINDOW * _w);
+
+    void destroy(std::vector<std::pair<int, int>> & _d);
 
     int update(char _i);
     
