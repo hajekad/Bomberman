@@ -127,7 +127,7 @@ CWorld::CWorld(int sourceFile, WINDOW * _w)
 */
     int foo = 0;
     std::ifstream fileStream;
-    fileStream.open("map0.txt");
+    fileStream.open("map2.txt");
     std::vector<CCell> currLine;
 
     std::string line;
