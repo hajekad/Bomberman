@@ -3,6 +3,7 @@
 CWorld::CWorld(WINDOW * _w)
 {
     CWorld( std::rand() % 2, _w);
+    hasPlayer = 0;
 }
 
 void CWorld::destroy(std::vector<std::pair<int, int>> & _d)
@@ -15,7 +16,7 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d)
         {
             for(auto j = characters.begin(); j != characters.end(); j++)
             {
-                if(_c->occupiedBy == *j)
+                if(_c->occupiedBy == *j && _c->occupiedBy.get()->characterType != PLAYER)
                 {
                     characters.erase(j);
                     break;
@@ -43,6 +44,9 @@ int CWorld::update(char _i)
     }
 
     int k = 0;
+
+    if(characters.begin()->get()->characterType != PLAYER) return 1; 
+
     CPlayer * player = (CPlayer *) characters.begin()->get();
 
     if(player->currBomb != nullptr) if(player->currBomb->update())
@@ -61,8 +65,11 @@ int CWorld::update(char _i)
     int playerAtLine = characters.begin()->get()->line;
     int playerAtCol = characters.begin()->get()->column;
 
+    hasPlayer = 0;
+
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
+        if(_ic->get()->characterType == PLAYER) hasPlayer = 1;
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
         k++;
@@ -102,6 +109,8 @@ int CWorld::update(char _i)
 
         if(_ic->get()->characterType == PLAYER) _i = 'H';
     }
+
+    if(!hasPlayer) return 1;
     
     return 0;
 }

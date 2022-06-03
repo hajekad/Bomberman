@@ -28,7 +28,7 @@ bool CEnemy::onePlace()
 }
 
 void CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
-{/*
+{
     int dir = 5;
     int rndm = std::rand() % speed;
 
@@ -90,7 +90,7 @@ void CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
             break;
         default:
             _i = 'H';
-    }*/
+    }
 }
 
 void CEnemy::receiveDmg(int _d)

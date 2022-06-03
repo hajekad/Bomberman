@@ -90,6 +90,8 @@ void CGameLoop::render(WINDOW * _w)
 
     int x = 1;
     int y = 1;
+
+    bool hasplayer = 0;
     
     for(auto i = currMap->worldMap.begin(); i != currMap->worldMap.end(); i++)
     {
@@ -99,6 +101,9 @@ void CGameLoop::render(WINDOW * _w)
             wmove(_w, y, x);
             char _c[1];
             _c[0] = j->texture;
+
+            if(_c[0] == 'P') hasplayer = 1;
+
             if(j->currState == OCCUPIED)
             {
                 start_color();
@@ -112,6 +117,7 @@ void CGameLoop::render(WINDOW * _w)
                 start_color();
                 init_pair(2, COLOR_BLACK, COLOR_RED);
                 wattron(_w,COLOR_PAIR(2));
+                _c[0] = 'o';
                 waddch(_w, _c[0]);
                 wattroff(_w,COLOR_PAIR(2));
             }
@@ -121,6 +127,8 @@ void CGameLoop::render(WINDOW * _w)
         y++;
         x = 1;
     }
+
+    if(!hasplayer) inMenu = 1;
     
     refresh();
     wrefresh(_w);

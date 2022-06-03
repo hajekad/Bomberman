@@ -17,6 +17,8 @@
 
 class CWorld
 {
+private:
+    bool hasPlayer;
 public:
     std::vector<std::vector<CCell>> worldMap;
     
