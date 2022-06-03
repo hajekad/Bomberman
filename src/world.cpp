@@ -7,14 +7,15 @@ CWorld::CWorld(WINDOW * _w)
 
 int CWorld::update(char _i)
 {
-    //std::cerr << "update" << std::endl;
     if(_i == 'e')
     {
         CPlayer * player = (CPlayer *) characters.begin()->get();
         player->placeBomb(worldMap.at(player->line).at(player->column));
     }
+
     int k = 0;
     CPlayer * player = (CPlayer *) characters.begin()->get();
+
     if(player->currBomb != nullptr) if(player->currBomb->update())
     {
         worldMap.at(player->currBomb->line).at(player->currBomb->column).bomb = nullptr;
@@ -23,14 +24,15 @@ int CWorld::update(char _i)
         player->currBomb = nullptr;
         player->placedBomb = 1;
     }
+
     int playerAtLine = characters.begin()->get()->line;
     int playerAtCol = characters.begin()->get()->column;
+
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
-        k++;
-        //std::cerr << k << std::endl;
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
+        k++;
 
         _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine);
 
@@ -67,6 +69,7 @@ int CWorld::update(char _i)
 
         if(_ic->get()->characterType == PLAYER) _i = 'H';
     }
+    
     return 0;
 }
 

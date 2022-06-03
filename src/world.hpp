@@ -16,9 +16,11 @@ class CWorld
 {
 public:
     std::vector<std::vector<CCell>> worldMap;
+    
     std::vector<std::shared_ptr<CCharacter>> characters;
     
     CWorld(WINDOW * _w);
+
     CWorld(int sourceFile, WINDOW * _w);
 
     int update(char _i);

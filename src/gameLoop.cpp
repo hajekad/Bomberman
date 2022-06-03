@@ -37,8 +37,6 @@ void CGameLoop::mainThread(WINDOW * _w)
 
     while(running)
     {
-        //cbreak();
-
         if(inMenu)
         {
             gameMenu.render(_w);

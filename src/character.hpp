@@ -18,14 +18,14 @@ public:
     int line, column;
     int speed;
     bool stayed;
+    int iH;
+    int hist[5];
 
     cT characterType;
 
-    int hist[5];
-    int iH;
+    CCharacter(char _s);
 
     virtual void decideNextMove(char & _i, int playerAtCol, int playerAtLine) = 0;
 
-    CCharacter(char _s);
     virtual ~CCharacter();
 };

@@ -16,5 +16,6 @@ void CWeapon::change(int _r, int _t)
 bool CWeapon::update()
 {
     if(std::chrono::system_clock::now() > timeToExplode) return 1;
+    
     return 0;
 }

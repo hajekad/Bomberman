@@ -2,10 +2,8 @@
 
 CEnemy::CEnemy(char _s) : CCharacter(_s)
 {
-    srand( (unsigned)time(NULL) );
-    //int type = std::rand() % 5;
-
     hp = 15;
+
     panicCnt = 0;
 }
 
@@ -17,18 +15,20 @@ void CEnemy::attack(CCharacter & toAttack)
 bool CEnemy::onePlace()
 {
     int first = hist[0];
+
     for(int i = 1; i < 5; i++)
     {
-        if(first != hist[i]) return 0;
+        if(first != hist[i])
+            return 0;
     }
+
     panicCnt = 5;
+
     return 1;
 }
 
 void CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
 {
-    //srand( time() );
-
     int dir = 5;
     int rndm = std::rand() % speed;
 
@@ -45,23 +45,31 @@ void CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
 
             if(line != playerAtLine && rnd == 1)
             {
-                if(line > playerAtLine) dir = 0;
-                else dir = 2;
+                if(line > playerAtLine)
+                    dir = 0;
+                else
+                    dir = 2;
             }
             else if(column != playerAtCol)
             {
-                if(column > playerAtCol) dir = 3;
-                else dir = 1;
+                if(column > playerAtCol)
+                    dir = 3;
+                else
+                    dir = 1;
             }
             else if(line != playerAtLine)
             {
-                if(line > playerAtLine) dir = 0;
-                else dir = 2;
+                if(line > playerAtLine)
+                    dir = 0;
+                else
+                    dir = 2;
             }
             else
             {
-                if(column > playerAtCol) dir = 3;
-                else dir = 1;
+                if(column > playerAtCol)
+                    dir = 3;
+                else
+                    dir = 1;
             }
         }
     }

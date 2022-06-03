@@ -4,6 +4,7 @@
 #include <time.h>
 #include <iostream>
 #include <stdlib.h>
+
 #include "character.hpp"
 
 class CEnemy : public CCharacter

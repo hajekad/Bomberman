@@ -24,14 +24,20 @@ CCell::CCell(char _c)
     {
         occupiedBy = nullptr;
 
-        if(_c == '@') currState = DESTROYABLE;
-        else if (_c == ' ') currState = FREE;
-        else currState = UNBREAKABLE;
+        if(_c == '@')
+            currState = DESTROYABLE;
+        else if (_c == ' ')
+            currState = FREE;
+        else
+            currState = UNBREAKABLE;
     }
 }
 
 CCell::~CCell()
 {
-    if(occupiedBy.use_count() == 0) delete occupiedBy.get();
-    if(bomb.use_count() == 0) delete bomb.get();
+    if(occupiedBy.use_count() == 0)
+        delete occupiedBy.get();
+        
+    if(bomb.use_count() == 0)
+        delete bomb.get();
 }
