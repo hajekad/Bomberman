@@ -5,6 +5,8 @@ CEnemy::CEnemy(char _s) : CCharacter(_s)
     hp = 15;
 
     panicCnt = 0;
+
+    characterType = ENEMY;
 }
 
 void CEnemy::attack(CCharacter & toAttack)

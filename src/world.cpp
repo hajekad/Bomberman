@@ -10,8 +10,10 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d)
         {
             for(auto j = characters.begin(); j != characters.end(); j++)
             {
-                if(_c->occupiedBy == *j && _c->occupiedBy.get()->characterType != PLAYER)
+                std::cerr << "will erase?\n" << j->get()->line << " " << i->first << std::endl << j->get()->column << " " << i->second << std::endl;
+                if((j->get()->line == i->first) && (j->get()->column == i->second))
                 {
+                    std::cerr << "erase\n"; 
                     characters.erase(j);
                     break;
                 }
@@ -39,7 +41,7 @@ int CWorld::update(char _i)
 
     int k = 0;
 
-    if(characters.begin()->get()->characterType != PLAYER) return 1; 
+    if(characters.begin()->get()->characterType != PLAYER) return 1;
 
     CPlayer * player = (CPlayer *) characters.begin()->get();
 
@@ -54,7 +56,8 @@ int CWorld::update(char _i)
 
         player->currBomb = nullptr;
         player->placedBomb = 1;
-    }
+    } 
+
 
     int playerAtLine = characters.begin()->get()->line;
     int playerAtCol = characters.begin()->get()->column;
