@@ -63,10 +63,12 @@ int CWorld::update(char _i)
     int playerAtCol = characters.begin()->get()->column;
 
     hasPlayer = 0;
+    hasEnemy = 0;
 
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
         if(_ic->get()->characterType == PLAYER) hasPlayer = 1;
+        if(_ic->get()->characterType == ENEMY) hasEnemy = 1;
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
         k++;
@@ -108,6 +110,8 @@ int CWorld::update(char _i)
     }
 
     if(!hasPlayer) return 1;
+
+    if(!hasEnemy) return 2;
     
     return 0;
 }

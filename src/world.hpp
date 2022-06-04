@@ -20,6 +20,7 @@ class CWorld
 {
 private:
     bool hasPlayer;
+    bool hasEnemy;
 public:
     std::vector<std::vector<CCell>> worldMap;
     
