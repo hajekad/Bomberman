@@ -5,7 +5,7 @@ CXX 		:= g++
 LD_FLAGS 	:= -Wall --pedantic -std=c++14
 CXX_FLAGS	:= $(LD_FLAGS) -c
 
-OBJS 		:= main.o cell.o world.o gameLoop.o menu.o character.o player.o enemy.o
+OBJS 		:= main.o cell.o world.o gameLoop.o menu.o character.o player.o enemy.o weapon.o
 
 SRC_DIRS := ./src
 
@@ -38,6 +38,9 @@ player.o: src/player.cpp src/player.hpp
 
 enemy.o: src/enemy.cpp src/enemy.hpp
 	$(CXX) $(CXX_FLAGS) src/enemy.cpp
+
+weapon.o: src/weapon.cpp src/weapon.hpp
+	$(CXX) $(CXX_FLAGS) src/weapon.cpp
 
 clean:
 	rm *.o BOMBERMAN out err
