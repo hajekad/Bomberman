@@ -49,13 +49,16 @@ void CGameLoop::mainThread(WINDOW * _w)
                 if(tmp == 'n')
                 {
                     inMenu = 0;
-                    currMap = new CWorld(_w);
+                    std::string tmp = "examples/map";
+                    tmp +=  ((std::rand() % 10) + '0');
+                    tmp += ".txt";
                     if(currMap != nullptr) delete currMap;
+                    currMap = new CWorld(tmp, _w);
                 }
                 else if(tmp == 'f')
                 {
                     inMenu = 0;
-                    int map = 1;
+                    std::string map = gameMenu.pickLevel(_w);
                     if(currMap != nullptr) delete currMap;
                     currMap = new CWorld(map, _w);
                 }

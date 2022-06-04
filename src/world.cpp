@@ -1,11 +1,5 @@
 #include "world.hpp"
 
-CWorld::CWorld(WINDOW * _w)
-{
-    CWorld( std::rand() % 2, _w);
-    hasPlayer = 0;
-}
-
 void CWorld::destroy(std::vector<std::pair<int, int>> & _d)
 {
     for(auto i = _d.begin(); i != _d.end(); i++)
@@ -115,19 +109,11 @@ int CWorld::update(char _i)
     return 0;
 }
 
-CWorld::CWorld(int sourceFile, WINDOW * _w)
+CWorld::CWorld(std::string fileName, WINDOW * _w)
 {
-/*
-    std::stringstream workStream;
-    
-    char name[1];
 
-    workStream << sourceFile;
-    workStream >> name[0];
-*/
-    int foo = 0;
     std::ifstream fileStream;
-    fileStream.open("map2.txt");
+    fileStream.open(fileName);
     std::vector<CCell> currLine;
 
     std::string line;
@@ -143,8 +129,6 @@ CWorld::CWorld(int sourceFile, WINDOW * _w)
         int _c = 0;
         for(auto i = line.begin(); i != end; i++)
         {
-            foo++;
-
             CCell currCell = CCell(*i);
 
             if(currCell.currState == OCCUPIED)

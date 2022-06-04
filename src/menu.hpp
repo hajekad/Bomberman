@@ -8,4 +8,8 @@ class CMenu
 {  
 public:
     void render(WINDOW * _w);
+
+    std::string pickLevel(WINDOW * _w);
+private:
+    bool isnum(char _a);
 };

@@ -6,6 +6,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <cstring>
 #include <ncurses.h>
 
 #include "cell.hpp"
@@ -24,9 +25,7 @@ public:
     
     std::vector<std::shared_ptr<CCharacter>> characters;
     
-    CWorld(WINDOW * _w);
-
-    CWorld(int sourceFile, WINDOW * _w);
+    CWorld(std::string fileName, WINDOW * _w);
 
     void destroy(std::vector<std::pair<int, int>> & _d);
 
