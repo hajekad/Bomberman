@@ -19,6 +19,7 @@
 class CWorld
 {
 private:
+    int playerCnt;
     bool hasPlayer;
     bool hasEnemy;
 public:

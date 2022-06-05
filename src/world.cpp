@@ -33,17 +33,20 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d)
 
 int CWorld::update(char _i)
 {
-    if(_i == 'e')
-    {
-        CPlayer * player = (CPlayer *) characters.begin()->get();
-        player->placeBomb(worldMap.at(player->line).at(player->column));
-    }
-
-    int k = 0;
-
     if(characters.begin()->get()->characterType != PLAYER) return 1;
 
     CPlayer * player = (CPlayer *) characters.begin()->get();
+    auto tmp = characters.begin();
+    tmp++;
+    CPlayer * playerTwo = (CPlayer *) tmp->get();
+
+    if(_i == 'e')
+        player->placeBomb(worldMap.at(player->line).at(player->column));
+
+    if(_i == 'o' && playerCnt > 1)
+        playerTwo->placeBomb(worldMap.at(playerTwo->line).at(playerTwo->column));
+
+    int k = 0;
 
     if(player->currBomb != nullptr) if(player->currBomb->update())
     {
@@ -56,18 +59,41 @@ int CWorld::update(char _i)
 
         player->currBomb = nullptr;
         player->placedBomb = 1;
+    }
+
+    if(playerCnt > 1) if(playerTwo->currBomb != nullptr) if(playerTwo->currBomb->update())
+    {
+        std::vector<std::pair<int, int>> toAttackTwo = playerTwo->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
+
+        destroy(toAttackTwo);
+
+        worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).bomb = nullptr;
+        worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).currState = FREE;
+
+        playerTwo->currBomb = nullptr;
+        playerTwo->placedBomb = 1;
     } 
 
 
-    int playerAtLine = characters.begin()->get()->line;
-    int playerAtCol = characters.begin()->get()->column;
+    int playerAtLine = player->line;
+    int playerAtCol = player->column;
+
+    int playerTwoAtLine = playerTwo->line;
+    int playerTwoAtCol = playerTwo->column;
 
     hasPlayer = 0;
     hasEnemy = 0;
+    playerCnt = 0;
+    int loopifier = 0;
 
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
-        if(_ic->get()->characterType == PLAYER) hasPlayer = 1;
+        loopifier++;
+        if(_ic->get()->characterType == PLAYER)
+        {
+            hasPlayer = 1;
+            playerCnt++;
+        }
         if(_ic->get()->characterType == ENEMY) hasEnemy = 1;
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
@@ -75,14 +101,29 @@ int CWorld::update(char _i)
 
         _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine);
 
-        switch(_i)
+        if(_ic->get()->characterType == PLAYER && loopifier == 2)
         {
-            case 'w': newLine--; break;
-            case 'a': newCol--; break;
-            case 's': newLine++; break;
-            case 'd': newCol++; break;
+            switch(_i)
+            {
+                case 'i': newLine--; break;
+                case 'j': newCol--; break;
+                case 'k': newLine++; break;
+                case 'l': newCol++; break;
 
-            default: break;
+                default: break;
+            }
+        }
+        else
+        {
+            switch(_i)
+            {
+                case 'w': newLine--; break;
+                case 'a': newCol--; break;
+                case 's': newLine++; break;
+                case 'd': newCol++; break;
+
+                default: break;
+            }
         }
 
         _ic->get()->hist[(_ic->get()->iH)] = newCol + newLine;
@@ -106,12 +147,12 @@ int CWorld::update(char _i)
                 && ((newLine != _ic->get()->line) || newCol != _ic->get()->column)
                 && (worldMap.at(newLine).at(newCol).occupiedBy.get()->characterType == PLAYER)) return 1;
 
-        if(_ic->get()->characterType == PLAYER) _i = 'H';
+        //if(_ic->get()->characterType == PLAYER) _i = 'H';
     }
 
     if(!hasPlayer) return 1;
 
-    if(!hasEnemy) return 2;
+    //if(!hasEnemy) return 2;
     
     return 0;
 }
@@ -125,6 +166,7 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
 
     std::string line;
 
+    playerCnt = 0;
     int _l = 0;
     int help = 0;
     while(getline(fileStream, line))
@@ -144,6 +186,7 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
                 currCell.occupiedBy->column = _c;
                 characters.push_back(currCell.occupiedBy);
                 help++;
+                if(characters.back().get()->characterType == PLAYER) playerCnt++;
                 //std::cerr <<"HELP"<< help << std::endl;
             }
             currLine.push_back(currCell);
@@ -157,7 +200,7 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
 }
 
 /*
-CWorld::~CWorld()
+
 {
 }
 */
