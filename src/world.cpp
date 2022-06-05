@@ -40,6 +40,15 @@ int CWorld::update(char _i)
     tmp++;
     CPlayer * playerTwo = (CPlayer *) tmp->get();
 
+    int playerAtLine = player->line;
+    int playerAtCol = player->column;
+
+    if(playerCnt > 1)
+    {
+        int playerTwoAtLine = playerTwo->line;
+        int playerTwoAtCol = playerTwo->column;
+    }
+
     if(_i == 'e')
         player->placeBomb(worldMap.at(player->line).at(player->column));
 
@@ -48,38 +57,36 @@ int CWorld::update(char _i)
 
     int k = 0;
 
-    if(player->currBomb != nullptr) if(player->currBomb->update())
+    if(player->currBomb != nullptr && player->currBomb->update())
     {
         std::vector<std::pair<int, int>> toAttack = player->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
 
-        destroy(toAttack);
-
         worldMap.at(player->currBomb->line).at(player->currBomb->column).bomb = nullptr;
         worldMap.at(player->currBomb->line).at(player->currBomb->column).currState = FREE;
+        
+        if(player != nullptr)
+        {
+            player->currBomb = nullptr;
+            player->placedBomb = 1;
+        }
 
-        player->currBomb = nullptr;
-        player->placedBomb = 1;
+        destroy(toAttack);
     }
-
-    if(playerCnt > 1) if(playerTwo->currBomb != nullptr) if(playerTwo->currBomb->update())
+    else if(playerCnt > 1 && playerTwo != nullptr && playerTwo->currBomb != nullptr && playerTwo->currBomb->update())
     {
         std::vector<std::pair<int, int>> toAttackTwo = playerTwo->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
 
-        destroy(toAttackTwo);
-
         worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).bomb = nullptr;
         worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).currState = FREE;
+        
+        if(playerTwo != nullptr)
+        {
+            playerTwo->currBomb = nullptr;
+            playerTwo->placedBomb = 1;
+        }
 
-        playerTwo->currBomb = nullptr;
-        playerTwo->placedBomb = 1;
-    } 
-
-
-    int playerAtLine = player->line;
-    int playerAtCol = player->column;
-
-    int playerTwoAtLine = playerTwo->line;
-    int playerTwoAtCol = playerTwo->column;
+        destroy(toAttackTwo);
+    }
 
     hasPlayer = 0;
     hasEnemy = 0;
