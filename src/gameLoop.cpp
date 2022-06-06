@@ -102,7 +102,7 @@ void CGameLoop::render(WINDOW * _w)
     int x = 1;
     int y = 1;
 
-    bool hasplayer = 0;
+    //bool hasplayer = 0;
     
     for(auto i = currMap->worldMap.begin(); i != currMap->worldMap.end(); i++)
     {
@@ -113,7 +113,7 @@ void CGameLoop::render(WINDOW * _w)
             char _c[1];
             _c[0] = j->texture;
 
-            if(_c[0] == 'P') hasplayer = 1;
+            //if(_c[0] == 'P') hasplayer = 1;
 
             if(j->currState == OCCUPIED)
             {
@@ -139,7 +139,7 @@ void CGameLoop::render(WINDOW * _w)
         x = 1;
     }
 
-    if(!hasplayer) inMenu = 1;
+    //if(!hasplayer) inMenu = 1;
     
     refresh();
     wrefresh(_w);

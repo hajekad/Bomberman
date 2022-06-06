@@ -6,6 +6,8 @@ CCell::CCell(char _c)
 
     bomb = nullptr;
 
+    hasBonus = 0;
+
     if(_c == 'P')
     {
         occupiedBy = std::make_shared<CPlayer>(_c);
