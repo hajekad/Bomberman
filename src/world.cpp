@@ -174,15 +174,19 @@ int CWorld::update(char _i)
     if(!hasEnemy)
     {
         CPlayer * _o1 = (CPlayer *) _p1.get();
-        CPlayer * _o2 = (CPlayer *) _p2.get();
-
-
-        if(_o1->score == _o2->score)
-            return scorePO;
-        else if(_o1->score > _o2->score)
-            return _o1->score + 1;
-        else
-            return _o2->score + 2;
+        if(_p2.get() != nullptr)
+        {
+            CPlayer * _o2 = (CPlayer *) _p2.get();
+    
+    
+            if(_o1->score == _o2->score)
+                return scorePO;
+            else if(_o1->score > _o2->score)
+                return _o1->score + 1;
+            else
+                return _o2->score + 2;
+        }
+        else return _o1->score + 1; 
     }
     
     return 0;
