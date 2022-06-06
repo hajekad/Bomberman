@@ -13,6 +13,7 @@ class CPlayer : public CCharacter
 public:
     std::shared_ptr<CWeapon> currBomb;
     bool placedBomb;
+    int score;
 
 private:
     int damage;

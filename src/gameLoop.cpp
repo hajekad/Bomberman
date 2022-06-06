@@ -74,13 +74,14 @@ void CGameLoop::mainThread(WINDOW * _w)
                 inMenu = 1; // 27 == ESC
             }
 
-            if(currMap->update(_in) == 1) inMenu = 1;
-            /*else if(currMap->update(_in) == 2)
+            int _t = currMap->update(_in);
+
+            if(_t == 1) inMenu = 1;
+            else if(_t > 1)
             {
-                if(currMap != nullptr) delete currMap;
-                
-                currMap = new CWorld("hub.txt", _w);
-            }*/
+                gameMenu.endGame(_w, _t);
+                inMenu = 1;
+            }
             
             render(_w);
         }

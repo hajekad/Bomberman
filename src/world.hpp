@@ -22,6 +22,11 @@ private:
     int playerCnt;
     bool hasPlayer;
     bool hasEnemy;
+    int scorePO;
+    int scorePT;
+    std::shared_ptr<CCharacter> _p1;
+    std::shared_ptr<CCharacter> _p2;
+
 public:
     std::vector<std::vector<CCell>> worldMap;
     
@@ -29,7 +34,7 @@ public:
     
     CWorld(std::string fileName, WINDOW * _w);
 
-    void destroy(std::vector<std::pair<int, int>> & _d);
+    void destroy(std::vector<std::pair<int, int>> & _d, CPlayer * _p);
 
     int update(char _i);
     

@@ -1,6 +1,6 @@
 #include "world.hpp"
 
-void CWorld::destroy(std::vector<std::pair<int, int>> & _d)
+void CWorld::destroy(std::vector<std::pair<int, int>> & _d, CPlayer * _p)
 {
     for(auto i = _d.begin(); i != _d.end(); i++)
     {
@@ -8,12 +8,11 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d)
         
         if(_c->currState == OCCUPIED)
         {
+            _p->score += 100;
             for(auto j = characters.begin(); j != characters.end(); j++)
             {
-                std::cerr << "will erase?\n" << j->get()->line << " " << i->first << std::endl << j->get()->column << " " << i->second << std::endl;
                 if((j->get()->line == i->first) && (j->get()->column == i->second))
                 {
-                    std::cerr << "erase\n"; 
                     characters.erase(j);
                     break;
                 }
@@ -42,13 +41,13 @@ int CWorld::update(char _i)
 
     int playerAtLine = player->line;
     int playerAtCol = player->column;
-
+/*
     if(playerCnt > 1)
     {
         int playerTwoAtLine = playerTwo->line;
         int playerTwoAtCol = playerTwo->column;
     }
-
+*/
     if(_i == 'e')
         player->placeBomb(worldMap.at(player->line).at(player->column));
 
@@ -70,7 +69,8 @@ int CWorld::update(char _i)
             player->placedBomb = 1;
         }
 
-        destroy(toAttack);
+        destroy(toAttack, player);
+        scorePO = ((CPlayer *) _p1.get())->score;
     }
     else if(playerCnt > 1 && playerTwo != nullptr && playerTwo->currBomb != nullptr && playerTwo->currBomb->update())
     {
@@ -85,7 +85,8 @@ int CWorld::update(char _i)
             playerTwo->placedBomb = 1;
         }
 
-        destroy(toAttackTwo);
+        destroy(toAttackTwo, playerTwo);
+        scorePT = ((CPlayer *) _p2.get())->score;
     }
 
     hasPlayer = 0;
@@ -159,7 +160,19 @@ int CWorld::update(char _i)
 
     if(!hasPlayer) return 1;
 
-    //if(!hasEnemy) return 2;
+    if(!hasEnemy)
+    {
+        CPlayer * _o1 = (CPlayer *) _p1.get();
+        CPlayer * _o2 = (CPlayer *) _p2.get();
+
+
+        if(_o1->score == _o2->score)
+            return scorePO;
+        else if(_o1->score > _o2->score)
+            return _o1->score + 1;
+        else
+            return _o2->score + 2;
+    }
     
     return 0;
 }
@@ -170,6 +183,9 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
     std::ifstream fileStream;
     fileStream.open(fileName);
     std::vector<CCell> currLine;
+
+    scorePO = 0;
+    scorePT = 0;
 
     std::string line;
 
@@ -204,10 +220,14 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
         currLine.clear();
         _l++;
     }
-}
 
-/*
-
-{
+    if(playerCnt == 1)
+    {
+        _p1 = *(characters.begin());
+    }
+    else if(playerCnt == 2)
+    {
+        _p1 = *(characters.begin());
+        _p2 = *(++(characters.begin()));
+    }
 }
-*/

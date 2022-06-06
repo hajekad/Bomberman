@@ -6,6 +6,7 @@ CPlayer::CPlayer(char _s) : CCharacter(_s)
     speed = 1;
     placedBomb = 1;
     currBomb = nullptr;
+    score = 0;
 }
 
 void CPlayer::placeBomb(CCell & _c)

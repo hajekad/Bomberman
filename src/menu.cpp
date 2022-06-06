@@ -72,3 +72,39 @@ bool CMenu::isnum(char _a)
 
     return true;
 }
+
+void CMenu::endGame(WINDOW * _w, int _t)
+{
+    int mod = _t % 100;
+
+    wclear(_w);
+    
+    box(_w, 0, 0);
+    
+    wmove(_w, 2, getmaxx(_w)/2 - 22);
+
+    if(mod)
+    {
+        wprintw(_w, "Player");
+        waddch(_w, mod + '0');
+        wprintw(_w, " won!");
+    }
+    else wprintw(_w, "Epic tie!");
+
+    wmove(_w, 3, getmaxx(_w)/2 - 22);
+    wprintw(_w, "with score: ");
+
+    std::stringstream ss;
+    ss << (_t - (_t % 100));
+    std::string tmp = ss.str();
+    
+    for(auto _it = tmp.begin(); _it != tmp.end(); _it++)
+    {
+        char _c = *_it;
+        waddch(_w, _c);
+    }
+
+    wmove(_w, 7, getmaxx(_w)/2 - 4);
+    wtimeout(_w, INT32_MAX);
+    wgetch(_w);
+}
