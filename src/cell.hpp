@@ -4,7 +4,6 @@
 
 #include "player.hpp"
 #include "enemy.hpp"
-//#include "npc.hpp"
 
 class CPlayer;
 
@@ -20,16 +19,20 @@ enum state
 class CCell
 {
 public:
-    bool hasBonus;
+    bool hasBonus; /** *@brief hasBonus determines if bonus item is present */
+    
+    char texture;  /** *@brief current texture of Cell */
+    
+    state currState; /** *@brief current state of this Cell */
 
+    std::shared_ptr<CCharacter> occupiedBy; /** *@brief a cell can be occupied by a character */
+    
+    std::shared_ptr<CWeapon> bomb; /** *@brief a bomb can be placed on a cell */
+    
+    /**
+     * @param _c will be set as texture
+     * @return no return value
+     */
     CCell(char _c);
     ~CCell();
-    
-    char texture;
-
-    state currState;
-    
-    std::shared_ptr<CCharacter> occupiedBy;
-    
-    std::shared_ptr<CWeapon> bomb;
 };

@@ -9,11 +9,6 @@ CEnemy::CEnemy(char _s) : CCharacter(_s)
     characterType = ENEMY;
 }
 
-void CEnemy::attack(CCharacter & toAttack)
-{
-    
-}
-
 bool CEnemy::onePlace()
 {
     int first = hist[0];
@@ -93,9 +88,4 @@ void CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
         default:
             _i = 'H';
     }
-}
-
-void CEnemy::receiveDmg(int _d)
-{
-
 }

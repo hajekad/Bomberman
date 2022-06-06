@@ -7,7 +7,7 @@ CPlayer::CPlayer(char _s) : CCharacter(_s)
     placedBomb = 1;
     currBomb = nullptr;
     score = 0;
-    range = 1;
+    range = 2;
     tTE = 4;
 }
 
