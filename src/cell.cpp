@@ -16,9 +16,10 @@ CCell::CCell(char _c)
         occupiedBy = std::make_shared<CEnemy>(_c);
         currState = OCCUPIED;
     }
-    else if(_c == 'N')
+    else if(_c == 'B')
     {
         currState = FREE;
+        hasBonus = 1;
     }
     else
     {

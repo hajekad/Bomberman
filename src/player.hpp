@@ -18,13 +18,17 @@ public:
 private:
     int damage;
     int speed;
+    int tTE;
+    int range;
 
 public:
     CPlayer(char _s);
 
     void placeBomb(CCell & _c);
-    
-    void useSecond();
-    
+
+    void changeRange(int _r);
+
+    void changeTTE();
+        
     void decideNextMove(char & _i, int playerAtCol, int playerAtLine);
 };

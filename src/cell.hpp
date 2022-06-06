@@ -20,6 +20,8 @@ enum state
 class CCell
 {
 public:
+    bool hasBonus;
+
     CCell(char _c);
     ~CCell();
     

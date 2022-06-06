@@ -56,7 +56,7 @@ int CWorld::update(char _i)
 
     int k = 0;
 
-    if(player->currBomb != nullptr && player->currBomb->update())
+    if(player->currBomb != nullptr && player->currBomb != nullptr && player->currBomb->update())
     {
         std::vector<std::pair<int, int>> toAttack = player->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
 
@@ -150,6 +150,17 @@ int CWorld::update(char _i)
 
             _ic->get()->line = newLine;
             _ic->get()->column = newCol;
+
+            if(worldMap.at(newLine).at(newCol).hasBonus && _ic->get()->characterType == PLAYER)
+            {
+                CPlayer * _tp = (CPlayer *) _ic->get();
+                worldMap.at(newLine).at(newCol).hasBonus = 0;
+                worldMap.at(newLine).at(newCol).texture = ' ';
+                int rand = std::rand() % 3;
+
+                if(rand) _tp->changeRange(rand);
+                else _tp->changeTTE();
+            }
         }
         else if((worldMap.at(newLine).at(newCol).currState == OCCUPIED)
                 && ((newLine != _ic->get()->line) || newCol != _ic->get()->column)
