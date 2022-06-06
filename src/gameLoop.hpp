@@ -13,19 +13,43 @@
 class CGameLoop
 {
     private: 
-        bool running;
-        bool inMenu;
-        CMenu gameMenu;
-        CWorld * currMap;
+        bool running; /** *@brief true if game should still run, false otherwise */
+        
+        bool inMenu; /** *@brief true if game should enter menu */
+        
+        CMenu gameMenu; /** *@brief CMenu to be used in this game */
+        
+        CWorld * currMap; /** *@brief current selected map to be played on */
 
     public:
         CGameLoop();
 
+        /**
+         * @brief get input from player 
+         * 
+         * @param _w window that is used for the current game session
+         * @return char 
+         */
         char getInput(WINDOW * _w);
 
+        /**
+         * @brief starts the main game loop and displays initial screen
+         * 
+         * @param _w window that is used for the current game session
+         */
         void start(WINDOW * _w);
 
+        /**
+         * @brief runs as long as running bool is true, calls menu methods, render and map update
+         * 
+         * @param _w window that is used for the current game session
+         */
         void mainThread(WINDOW * _w);
 
+        /**
+         * @brief draws the current state of game into the konsole
+         * 
+         * @param _w window that is used for the current game session 
+         */
         void render(WINDOW * _w);
 };

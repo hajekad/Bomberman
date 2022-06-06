@@ -19,7 +19,7 @@
 class CWorld
 {
 private:
-    int playerCnt;
+    int playerCnt; /** *@brief count of players on the current map */
     bool hasPlayer;
     bool hasEnemy;
     int scorePO;
