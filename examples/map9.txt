@@ -7,7 +7,7 @@
 |                                            |
 |          P                                 |
 |                                            |
-|                                            |
-|##                                        ##|
-|E#                                        #E|
+|                     B                      |
+|##BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB##|
+|E##BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB#E|
 +---------------------~----------------------+
