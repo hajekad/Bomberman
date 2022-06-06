@@ -42,5 +42,12 @@ enemy.o: src/enemy.cpp src/enemy.hpp
 weapon.o: src/weapon.cpp src/weapon.hpp
 	$(CXX) $(CXX_FLAGS) src/weapon.cpp
 
+doc: doc src/*.hpp
+	doxygen doxyfile
+
+zip: examples/* src/* Doxyfile Makefile prohlaseni.txt README.md
+	zip
+
 clean:
-	rm *.o BOMBERMAN out err
+	rm *.o BOMBERAN
+	rm -rf doc/
