@@ -48,19 +48,21 @@ void CGameLoop::mainThread(WINDOW * _w)
                 tmp = getInput(_w);
                 if(tmp == 'n')
                 {
+                    fileName.clear();
                     inMenu = 0;
-                    std::string tmp = "examples/map";
-                    tmp +=  ((std::rand() % 10) + '0');
-                    tmp += ".txt";
+                    fileName = "examples/map";
+                    fileName +=  ((std::rand() % 10) + '0');
+                    fileName += ".txt";
                     if(currMap != nullptr) delete currMap;
-                    currMap = new CWorld(tmp, _w);
+                    currMap = new CWorld(fileName, _w);
                 }
                 else if(tmp == 'f')
                 {
+                    fileName.clear();
                     inMenu = 0;
-                    std::string map = gameMenu.pickLevel(_w);
+                    fileName = gameMenu.pickLevel(_w);
                     if(currMap != nullptr) delete currMap;
-                    currMap = new CWorld(map, _w);
+                    currMap = new CWorld(fileName, _w);
                 }
                 else if(tmp == 'e') running = 0;
             }
@@ -79,6 +81,7 @@ void CGameLoop::mainThread(WINDOW * _w)
             if(_t == 1) inMenu = 1;
             else if(_t > 1)
             {
+                writeToFile(_t);
                 gameMenu.endGame(_w, _t);
                 inMenu = 1;
             }
@@ -143,4 +146,32 @@ void CGameLoop::render(WINDOW * _w)
     
     refresh();
     wrefresh(_w);
+}
+
+void CGameLoop::writeToFile(int _t)
+{
+    if(_t > currMap->highScore) currMap->highScore = _t;
+
+    std::vector<std::string> map;
+    std::string line;
+    std::ifstream inFileStream;
+    std::ofstream outFileStream;
+    std::stringstream _ss;
+
+    inFileStream.open(fileName);
+
+    while(getline(inFileStream, line))
+        map.push_back(line);
+
+    _ss << (currMap->highScore - (currMap->highScore % 100));
+    _ss >> line;
+    map.back() = line;
+
+    outFileStream.open(fileName);
+
+    for(auto i = map.begin(); i != map.end(); i++)
+    {
+        outFileStream << *i;
+        if(*i != map.back()) outFileStream << std::endl;
+    }
 }

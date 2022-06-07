@@ -192,6 +192,27 @@ int CWorld::update(char _i)
     return 0;
 }
 
+bool CWorld::isnum(char _a)
+{
+    switch(_a)
+    {
+        case '0': break;
+        case '1': break;
+        case '2': break;
+        case '3': break;
+        case '4': break;
+        case '5': break;
+        case '6': break;
+        case '7': break;
+        case '8': break;
+        case '9': break;
+
+        default: return false;
+    }
+
+    return true;
+}
+
 CWorld::CWorld(std::string fileName, WINDOW * _w)
 {
 
@@ -209,31 +230,36 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
     int help = 0;
     while(getline(fileStream, line))
     {
-        auto end = line.end();
-        auto copy = end;
-        copy--;
-
-        int _c = 0;
-        for(auto i = line.begin(); i != end; i++)
+        if(isnum(*(line.begin())))
+            highScore = std::stoi(line);
+        else
         {
-            CCell currCell = CCell(*i);
+            auto end = line.end();
+            auto copy = end;
+            copy--;
 
-            if(currCell.currState == OCCUPIED)
+            int _c = 0;
+            for(auto i = line.begin(); i != end; i++)
             {
-                currCell.occupiedBy->line = _l;
-                currCell.occupiedBy->column = _c;
-                characters.push_back(currCell.occupiedBy);
-                help++;
-                if(characters.back().get()->characterType == PLAYER) playerCnt++;
-                //std::cerr <<"HELP"<< help << std::endl;
+                CCell currCell = CCell(*i);
+
+                if(currCell.currState == OCCUPIED)
+                {
+                    currCell.occupiedBy->line = _l;
+                    currCell.occupiedBy->column = _c;
+                    characters.push_back(currCell.occupiedBy);
+                    help++;
+                    if(characters.back().get()->characterType == PLAYER) playerCnt++;
+                    //std::cerr <<"HELP"<< help << std::endl;
+                }
+                currLine.push_back(currCell);
+                if(i == copy) worldMap.push_back(currLine);
+                _c++;
             }
-            currLine.push_back(currCell);
-            if(i == copy) worldMap.push_back(currLine);
-            _c++;
+            line.clear();
+            currLine.clear();
+            _l++;
         }
-        line.clear();
-        currLine.clear();
-        _l++;
     }
 
     if(playerCnt == 1)

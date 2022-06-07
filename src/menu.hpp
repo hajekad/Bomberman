@@ -31,7 +31,7 @@ public:
      * @return std::string name of the picked map
      */
     std::string pickLevel(WINDOW * _w);
-private:
+
     /**
      * @brief decides if _a is a digit
      * 

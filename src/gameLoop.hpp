@@ -21,6 +21,8 @@ class CGameLoop
         
         CWorld * currMap; /** *@brief current selected map to be played on */
 
+        std::string fileName;
+
     public:
         CGameLoop();
 
@@ -52,4 +54,6 @@ class CGameLoop
          * @param _w window that is used for the current game session 
          */
         void render(WINDOW * _w);
+
+        void writeToFile(int _t);
 };

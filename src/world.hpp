@@ -34,6 +34,10 @@ private:
     std::shared_ptr<CCharacter> _p2; /** *@brief player 2 */
 
 public:
+    int highScore;
+
+    bool isnum(char _a);
+
     std::vector<std::vector<CCell>> worldMap; /** *@brief map built from cells */
     
     std::vector<std::shared_ptr<CCharacter>> characters; /** *@brief all characters that are still alive */
