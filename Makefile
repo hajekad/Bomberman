@@ -45,7 +45,7 @@ weapon.o: src/weapon.cpp src/weapon.hpp
 doc: doc src/*.hpp
 	doxygen Doxyfile
 
-zip: examples/* src/* Doxyfile Makefile prohlaseni.txt README.md
+zip: examples/* src/* Doxyfile Makefile prohlaseni.txt zadani.txt
 	zip -rj hajekad3.zip * 
 
 run: $(PROG)
