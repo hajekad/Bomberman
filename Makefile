@@ -1,4 +1,4 @@
-PROG		:= BOMBERMAN
+PROG		:= hajekad3
 
 CXX 		:= g++
 
@@ -43,11 +43,21 @@ weapon.o: src/weapon.cpp src/weapon.hpp
 	$(CXX) $(CXX_FLAGS) src/weapon.cpp
 
 doc: doc src/*.hpp
-	doxygen doxyfile
+	doxygen Doxyfile
 
 zip: examples/* src/* Doxyfile Makefile prohlaseni.txt README.md
-	zip
+	zip -rj hajekad3.zip * 
+
+run: $(PROG)
+	./$(PROG)
+
+all:
+	make
+	make doc
+
+compile:
+	make
 
 clean:
-	rm *.o BOMBERAN
+	rm *.o $(PROG)
 	rm -rf doc/
