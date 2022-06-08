@@ -7,6 +7,9 @@ CEnemy::CEnemy(char _s) : CCharacter(_s)
     panicCnt = 0;
 
     characterType = ENEMY;
+
+    for(int i = 0; i < 5; i++)
+	hist[i] = i;
 }
 
 bool CEnemy::onePlace()
