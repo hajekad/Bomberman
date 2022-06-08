@@ -138,7 +138,7 @@ int CWorld::update(char _i)
 
         destroy(toAttackTwo, playerTwo);
         worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).bomb = nullptr;
-        //worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).currState = FREE;
+        worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).currState = FREE;
         
         
         if(playerTwo != nullptr)
