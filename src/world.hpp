@@ -33,6 +33,8 @@ private:
     
     std::shared_ptr<CCharacter> _p2; /** *@brief player 2 */
 
+    void parseD(std::vector<std::pair<int, int>> & _d);
+
 public:
     int highScore;
 

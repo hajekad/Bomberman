@@ -24,21 +24,24 @@ std::vector<std::pair<int, int>> CWeapon::explode(int _lC, int _cC)
 {
     std::vector<std::pair<int, int>> ret;
 
+    int dirCnt, _u, _d, _l, _r;
+    dirCnt = _u = _d = _l = _r = 0;
+
     ret.push_back(std::make_pair(line, column));
 
     for(int i = 1; i < range; i++)
     {
-        if((line - i) > 0)
-            ret.push_back(std::make_pair(line - i, column));
+        ret.push_back(std::make_pair(line - i, column));
+        ret.push_back(std::make_pair(line + i, column));
+        ret.push_back(std::make_pair(line, column - i));
+        ret.push_back(std::make_pair(line, column + i));
+    }
+    dirCnt = 4;
+    ret.push_back(std::make_pair(dirCnt, dirCnt));
 
-        if((line + i) < _lC)
-            ret.push_back(std::make_pair(line + i, column));
-        
-        if((column - i) > 0)
-            ret.push_back(std::make_pair(line, column - i));
-        
-        if((column + i) < _cC)
-            ret.push_back(std::make_pair(line, column + i));
+    for(auto it = ret.begin(); it != ret.end(); it++)
+    {
+        std::cerr << "line: " << it->first << "column: " << it->second << std::endl;
     }
 
     return ret;

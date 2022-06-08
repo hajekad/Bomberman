@@ -1,31 +1,92 @@
 #include "world.hpp"
 
+void CWorld::parseD(std::vector<std::pair<int, int>> & _d)
+{
+    auto i = _d.begin();
+    auto tmp = i;
+    int cont = 0;
+    i++;
+    std::vector<std::pair<int, int>> _u, _do, _l, _r;
+
+    for(; i != (_d.end() - 1); i++)
+    {
+        switch (cont % 4)
+        {
+            case 0:
+                _u.push_back(*i);
+                break;
+            case 1:
+                _r.push_back(*i);
+                break;
+            case 2:
+                _do.push_back(*i);
+                break;
+            case 3:
+                _l.push_back(*i);
+                break;
+            default: break;
+        }
+        cont++;
+    }
+
+    _d.clear();
+    _d.push_back(*tmp);
+
+    for(auto i = _u.begin(); i != _u.end(); i++)
+    {
+        if(worldMap.at(i->first).at(i->second).currState == UNBREAKABLE) break;
+        _d.push_back(*i);
+    }
+    for(auto i = _r.begin(); i != _r.end(); i++)
+    {
+        if(worldMap.at(i->first).at(i->second).currState == UNBREAKABLE) break;
+        _d.push_back(*i);
+    }
+    for(auto i = _do.begin(); i != _do.end(); i++)
+    {
+        if(worldMap.at(i->first).at(i->second).currState == UNBREAKABLE) break;
+        _d.push_back(*i);
+    }
+    for(auto i = _l.begin(); i != _l.end(); i++)
+    {
+        if(worldMap.at(i->first).at(i->second).currState == UNBREAKABLE) break;
+        _d.push_back(*i);
+    }
+    for(auto i: _d)
+        std::cerr<<"parseD: "<<i.first<<" "<<i.second<<std::endl;
+}
+
 void CWorld::destroy(std::vector<std::pair<int, int>> & _d, CPlayer * _p)
 {
-    for(auto i = _d.begin(); i != _d.end(); i++)
-    {
-        CCell * _c = &(worldMap.at(i->first).at(i->second));
-        
-        if(_c->currState == OCCUPIED)
-        {
-            _p->score += 100;
-            for(auto j = characters.begin(); j != characters.end(); j++)
-            {
-                if((j->get()->line == i->first) && (j->get()->column == i->second))
-                {
-                    characters.erase(j);
-                    break;
-                }
-            }
+    parseD(_d);
 
-            _c->currState = FREE;
-            _c->occupiedBy = nullptr;
-            _c->texture = ' ';
-        }
-        else if(_c->currState == DESTROYABLE)
+    for(auto i = _d.begin(); i != (_d.end()); i++)
+    {
+        if(i->first > 0 && size_t(i->first) < worldMap.size() && i->second > 0 && size_t(i->second) < worldMap.at(1).size())
         {
-            _c->currState = FREE;
-            _c->texture = ' ';
+            CCell * _c = &(worldMap.at(i->first).at(i->second));
+
+            if(_c->currState == OCCUPIED || (_c->currState == BOMB && _c->occupiedBy != nullptr))
+            {
+                _p->score += 100;
+                for(auto j = characters.begin(); j != characters.end(); j++)
+                {
+                    if((j->get()->line == i->first) && (j->get()->column == i->second))
+                    {
+                        characters.erase(j);
+                        break;
+                    }
+                }
+
+                _c->currState = FREE;
+                _c->occupiedBy = nullptr;
+                _c->texture = ' ';
+            }
+            else if(_c->currState == DESTROYABLE)
+            {
+                _c->currState = FREE;
+                _c->texture = ' ';
+            }
         }
     }
 }
@@ -60,32 +121,31 @@ int CWorld::update(char _i)
     {
         std::vector<std::pair<int, int>> toAttack = player->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
 
+        destroy(toAttack, player);
+        
         worldMap.at(player->currBomb->line).at(player->currBomb->column).bomb = nullptr;
-        worldMap.at(player->currBomb->line).at(player->currBomb->column).currState = FREE;
         
         if(player != nullptr)
         {
             player->currBomb = nullptr;
             player->placedBomb = 1;
         }
-
-        destroy(toAttack, player);
         scorePO = ((CPlayer *) _p1.get())->score;
     }
     else if(playerCnt > 1 && playerTwo != nullptr && playerTwo->currBomb != nullptr && playerTwo->currBomb->update())
     {
         std::vector<std::pair<int, int>> toAttackTwo = playerTwo->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
 
+        destroy(toAttackTwo, playerTwo);
         worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).bomb = nullptr;
-        worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).currState = FREE;
+        //worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).currState = FREE;
+        
         
         if(playerTwo != nullptr)
         {
             playerTwo->currBomb = nullptr;
             playerTwo->placedBomb = 1;
         }
-
-        destroy(toAttackTwo, playerTwo);
         scorePT = ((CPlayer *) _p2.get())->score;
     }
 
