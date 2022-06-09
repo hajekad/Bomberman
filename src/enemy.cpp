@@ -2,13 +2,13 @@
 
 CEnemy::CEnemy(char _s) : CCharacter(_s)
 {
-    hp = 15;
+    hp = _START_HP;
 
     panicCnt = 0;
 
     characterType = ENEMY;
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < _PANIC_ARRAY_SIZE; i++)
 	hist[i] = i;
 }
 
@@ -16,24 +16,24 @@ bool CEnemy::onePlace()
 {
     int first = hist[0];
 
-    for(int i = 1; i < 5; i++)
+    for(int i = 1; i < _PANIC_ARRAY_SIZE; i++)
     {
         if(first != hist[i])
-            return 0;
+            return false;
     }
 
-    panicCnt = 5;
+    panicCnt = _PANIC_ARRAY_SIZE;
 
-    return 1;
+    return true;
 }
 std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA)
 {
-    int dir = 5;
+    int dir = _INIT_DIR;
     int rndm = std::rand() % speed;
 
     if(onePlace() || panicCnt != 0)
     {
-        dir = std::rand() % (speed + 7);
+        dir = std::rand() % (speed + _PANIC_BOOST);
         panicCnt--;
     }
     else
@@ -45,30 +45,30 @@ std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int 
             if(line != playerAtLine && rnd == 1)
             {
                 if(line > playerAtLine)
-                    dir = 0;
+                    dir = UP;
                 else
-                    dir = 2;
+                    dir = DOWN;
             }
             else if(column != playerAtCol)
             {
                 if(column > playerAtCol)
-                    dir = 3;
+                    dir = LEFT;
                 else
-                    dir = 1;
+                    dir = RIGHT;
             }
             else if(line != playerAtLine)
             {
                 if(line > playerAtLine)
-                    dir = 0;
+                    dir = UP;
                 else
-                    dir = 2;
+                    dir = DOWN;
             }
             else
             {
                 if(column > playerAtCol)
-                    dir = 3;
+                    dir = LEFT;
                 else
-                    dir = 1;
+                    dir = RIGHT;
             }
         }
     }
@@ -76,24 +76,24 @@ std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int 
     switch(dir)
     {
         case 0:
-            _i = 'w'; // UP
+            _i = _UP; // UP
             break;
         case 1:
-            _i = 'd'; // RIGHT
+            _i = _RIGHT; // RIGHT
             break;
         case 2:
-            _i = 's'; // DOWN
+            _i = _DOWN; // DOWN
             break;
         case 3:
-            _i = 'a'; // LEFT
+            _i = _LEFT;
             break;
         default:
-            _i = 'H';
+            _i = _STAY;
     }
     return nullptr;
 }
 
 void CEnemy::change()
 {
-    if(speed > 4) speed--; // fastest playable speed
+    if(speed > _MAX_SPEED) speed--; // fastest playable speed
 }

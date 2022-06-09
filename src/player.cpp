@@ -2,12 +2,10 @@
 
 CPlayer::CPlayer(char _s) : CCharacter(_s)
 {
-    damage = 1;
-    speed = 1;
-    placedBomb = 1;
+    placedBomb = true;
     currBomb = nullptr;
-    range = 2;
-    tTE = 4;
+    range = _START_RANGE;
+    tTE = _START_TIME_TO_EXPLODE;
 }
 
 std::shared_ptr<CWeapon> CPlayer::placeBomb()
@@ -36,7 +34,7 @@ void CPlayer::changeTTE()
 
 std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA)
 {
-    if(((_i == 'o') || (_i == 'e')))
+    if(((_i == _BOMB_BUTTON_PLAYER_ONE) && !second) || ((_i == _BOMB_BUTTON_PLAYER_TWO) && second))
         return placeBomb();
 
     if(currBomb != nullptr && currBomb->update())
@@ -44,19 +42,19 @@ std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int
         _tA = currBomb->explode();
 
         currBomb = nullptr;
-        placedBomb = 1;
+        placedBomb = true;
     }
 
     if(second)
     {
         switch(_i)
         {
-            case 'i': _i = 'w'; break; // UP
-            case 'l': _i = 'd'; break; // RIGHT
-            case 'k': _i = 's'; break; // DOWN
-            case 'j': _i = 'a'; break; // LEFT
+            case 'i': _i = _UP; break;
+            case 'l': _i = _RIGHT; break;
+            case 'k': _i = _DOWN; break;
+            case 'j': _i = _LEFT; break;
 
-            default: _i = 'H'; break;
+            default: _i = _STAY; break;
         }
     }
 
@@ -65,7 +63,7 @@ std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int
 
 void CPlayer::change()
 {
-    int rand = std::rand() % 3;
+    int rand = std::rand() % _POSSIBLE_OUTCOMES;
 
     if(rand) changeRange(rand);
     else changeTTE();

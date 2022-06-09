@@ -16,9 +16,9 @@ void CWeapon::change(int _r, int _t)
 bool CWeapon::update()
 {
     std::cerr<<"update weapon\n";
-    if(std::chrono::system_clock::now() > timeToExplode) return 1;
+    if(std::chrono::system_clock::now() > timeToExplode) return true;
     
-    return 0;
+    return false;
 }
 
 std::vector<std::pair<int, int>> CWeapon::explode()
@@ -37,7 +37,7 @@ std::vector<std::pair<int, int>> CWeapon::explode()
         ret.push_back(std::make_pair(line, column - i));
         ret.push_back(std::make_pair(line, column + i));
     }
-    dirCnt = 4;
+    dirCnt = _DIRECTIONS_IN_EXISTENCE;
     ret.push_back(std::make_pair(dirCnt, dirCnt));
 
     return ret;

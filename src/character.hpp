@@ -6,6 +6,17 @@
 
 #include "weapon.hpp"
 
+#define _PLAYER 'P'
+#define _ENEMY 'E'
+#define _MAX_SPEED_DIFF 5
+#define _MAX_SPEED 4
+
+#define _UP 'w'
+#define _RIGHT 'd'
+#define _DOWN 's'
+#define _LEFT 'a'
+#define _STAY 'H'
+
 enum cT
 {
     PLAYER,

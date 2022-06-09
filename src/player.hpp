@@ -6,6 +6,13 @@
 #include "weapon.hpp"
 #include "cell.hpp"
 
+#define _START_RANGE 2
+#define _START_TIME_TO_EXPLODE 4
+#define _BOMB_BUTTON_PLAYER_ONE 'o'
+#define _BOMB_BUTTON_PLAYER_TWO 'e'
+#define _POSSIBLE_OUTCOMES 3
+
+
 class CCell;
 
 class CPlayer : public CCharacter
@@ -15,11 +22,7 @@ public:
     
     bool placedBomb; /** *@brief true if player can place a bomb */
     
-private:
-    int damage; /** *@brief legacy unused variable */
-
-    int speed; /** *@brief legacy unused variable */
-    
+private:    
     int tTE; /** *@brief time to explode, used for bomb */
     
     int range; /** *@brief range of players bombs */

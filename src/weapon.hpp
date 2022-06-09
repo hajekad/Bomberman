@@ -10,6 +10,8 @@
 
 //class CWorld;
 
+#define _DIRECTIONS_IN_EXISTENCE 4
+
 class CWeapon
 {
 public:

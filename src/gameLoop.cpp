@@ -8,7 +8,7 @@ char CGameLoop::getInput(WINDOW * _w)
     ret = wgetch(_w);
     flushinp();
     if(ret != ERR) return ret;
-    return 'H';
+    return _STAY;
 }
 
 CGameLoop::CGameLoop()
@@ -26,8 +26,8 @@ void CGameLoop::start(WINDOW * _w)
     refresh();
     wrefresh(_w);
 
-    running = 1;
-    inMenu = 1;
+    running = true;
+    inMenu = true;
     wgetch(_w);
 }
 
@@ -46,17 +46,17 @@ void CGameLoop::mainThread(WINDOW * _w)
             while(tmp == 0)
             {
                 tmp = getInput(_w);
-                if(tmp == 'n')
+                if(tmp == _NEW_GAME)
                 {
                     fileName.clear();
                     inMenu = 0;
                     fileName = "examples/map";
-                    fileName +=  ((std::rand() % 10) + '0');
+                    fileName +=  ((std::rand() % _MAP_COUNT) + '0');
                     fileName += ".txt";
                     if(currMap != nullptr) delete currMap;
                     currMap = new CWorld(fileName, _w);
                 }
-                else if(tmp == 'f')
+                else if(tmp == _LOAD_FILE)
                 {
                     fileName.clear();
                     inMenu = 0;
@@ -64,21 +64,21 @@ void CGameLoop::mainThread(WINDOW * _w)
                     if(currMap != nullptr) delete currMap;
                     currMap = new CWorld(fileName, _w);
                 }
-                else if(tmp == 'e') running = 0;
+                else if(tmp == _EXIT) running = false;
             }
         }
         else
         {
             char _in = getInput(_w);
 
-            if(_in == 27)
+            if(_in == _ESC)
             {
-                inMenu = 1; // 27 == ESC
+                inMenu = true; // 27 == ESC
             }
 
             int _t = currMap->update(_in);
 
-            if(_t == 1) inMenu = 1;
+            if(_t == 1) inMenu = true;
             else if(_t > 1)
             {
                 writeToFile(_t);

@@ -10,18 +10,18 @@ void CWorld::parseD(std::vector<std::pair<int, int>> & _d)
 
     for(; i != (_d.end() - 1); i++)
     {
-        switch (cont % 4)
+        switch (cont % _DIRECTIONS_IN_EXISTENCE)
         {
-            case 0:
+            case UP:
                 _u.push_back(*i);
                 break;
-            case 1:
+            case RIGHT:
                 _r.push_back(*i);
                 break;
-            case 2:
+            case DOWN:
                 _do.push_back(*i);
                 break;
-            case 3:
+            case LEFT:
                 _l.push_back(*i);
                 break;
             default: break;
@@ -68,7 +68,7 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCha
 
             if(_c->currState == OCCUPIED || (_c->currState == BOMB && _c->occupiedBy != nullptr))
             {
-                _p.get()->score += 100;
+                _p.get()->score += _MORE_SCORE;
                 for(auto j = characters.begin(); j != characters.end(); j++)
                 {
                     if((j->get()->line == i->first) && (j->get()->column == i->second))
@@ -106,8 +106,8 @@ int CWorld::update(char _i)
     int playerTwoAtLine = playerTwo->line;
     int playerTwoAtCol = playerTwo->column;
 
-    hasPlayer = 0;
-    hasEnemy = 0;
+    hasPlayer = false;
+    hasEnemy = false;
     playerCnt = 0;
     int loopifier = 0;
 
@@ -116,10 +116,10 @@ int CWorld::update(char _i)
         loopifier++;
         if(_ic->get()->characterType == PLAYER)
         {
-            hasPlayer = 1;
+            hasPlayer = true;
             playerCnt++;
         }
-        if(_ic->get()->characterType == ENEMY) hasEnemy = 1;
+        if(_ic->get()->characterType == ENEMY) hasEnemy = true;
 
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
@@ -140,17 +140,17 @@ int CWorld::update(char _i)
         }
         switch(_i)
         {
-            case 'w': newLine--; break;
-            case 'a': newCol--; break;
-            case 's': newLine++; break;
-            case 'd': newCol++; break;
+            case _UP: newLine--; break;
+            case _LEFT: newCol--; break;
+            case _DOWN: newLine++; break;
+            case _RIGHT: newCol++; break;
 
             default: break;
         }
 
         _ic->get()->hist[(_ic->get()->iH)] = newCol + newLine;
         (_ic->get()->iH)++;
-        (_ic->get()->iH) %= 5;
+        (_ic->get()->iH) %= _PANIC_ARRAY_SIZE;
 
         if((worldMap.at(newLine).at(newCol).currState == FREE) && ((newLine != _ic->get()->line) || newCol != _ic->get()->column))
         {
@@ -168,7 +168,7 @@ int CWorld::update(char _i)
             if(worldMap.at(newLine).at(newCol).hasBonus)
             {
                 worldMap.at(newLine).at(newCol).hasBonus = 0;
-                worldMap.at(newLine).at(newCol).texture = ' ';
+                worldMap.at(newLine).at(newCol).texture = _FREE;
 
                 _ic->get()->change();
             }
@@ -203,8 +203,8 @@ int CWorld::update(char _i)
 
 bool CWorld::isnum(char _a)
 {
-    if(_a >= '0' && _a <= '9') return 1;
-    return 0;
+    if(_a >= '0' && _a <= '9') return true;
+    return false;
 }
 
 CWorld::CWorld(std::string fileName, WINDOW * _w)
@@ -263,6 +263,6 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
     {
         _p1 = *(characters.begin());
         _p2 = *(++(characters.begin()));
-        _p2.get()->second = 1;
+        _p2.get()->second = true;
     }
 }

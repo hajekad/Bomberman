@@ -6,30 +6,30 @@ CCell::CCell(char _c)
 
     bomb = nullptr;
 
-    hasBonus = 0;
+    hasBonus = false;
 
-    if(_c == 'P')
+    if(_c == _PLAYER)
     {
         occupiedBy = std::make_shared<CPlayer>(_c);
         currState = OCCUPIED;
     }
-    else if(_c == 'E')
+    else if(_c == _ENEMY)
     {
         occupiedBy = std::make_shared<CEnemy>(_c);
         currState = OCCUPIED;
     }
-    else if(_c == 'B')
+    else if(_c == _BONUS)
     {
         currState = FREE;
-        hasBonus = 1;
+        hasBonus = true;
     }
     else
     {
         occupiedBy = nullptr;
 
-        if(_c == '@')
+        if(_c == _DESTROYABLE)
             currState = DESTROYABLE;
-        else if (_c == ' ')
+        else if (_c == _FREE)
             currState = FREE;
         else
             currState = UNBREAKABLE;

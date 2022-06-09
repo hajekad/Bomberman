@@ -10,6 +10,13 @@
 #include "menu.hpp"
 #include "world.hpp"
 
+#define _NEW_GAME 'n'
+#define _LOAD_FILE 'f'
+#define _EXIT 'e'
+#define _ESC 27
+
+#define _MAP_COUNT 10
+
 class CGameLoop
 {
     private: 

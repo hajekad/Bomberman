@@ -5,6 +5,12 @@
 #include "player.hpp"
 #include "enemy.hpp"
 
+#define _PLAYER 'P'
+#define _ENEMY 'E'
+#define _BONUS 'B'
+#define _DESTROYABLE '@'
+#define _FREE ' '
+
 class CPlayer;
 
 enum state

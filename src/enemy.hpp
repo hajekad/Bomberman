@@ -7,6 +7,16 @@
 
 #include "character.hpp"
 
+#define _START_HP 15
+#define _PANIC_ARRAY_SIZE 5
+#define _INIT_DIR 5
+#define _PANIC_BOOST 7
+
+#define UP 0
+#define RIGHT 1
+#define DOWN 2
+#define LEFT 3
+
 class CEnemy : public CCharacter
 {
 private:
