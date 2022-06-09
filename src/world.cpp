@@ -56,6 +56,7 @@ void CWorld::parseD(std::vector<std::pair<int, int>> & _d)
 
 void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCharacter> _p)
 {
+    std::cerr << "ultimATWE DESTRUCTION\n";
     parseD(_d);
 
     for(auto i = _d.begin(); i != (_d.end()); i++)
@@ -63,6 +64,7 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCha
         if(i->first > 0 && size_t(i->first) < worldMap.size() && i->second > 0 && size_t(i->second) < worldMap.at(1).size())
         {
             CCell * _c = &(worldMap.at(i->first).at(i->second));
+            worldMap.at(i->first).at(i->second).bomb = nullptr;
 
             if(_c->currState == OCCUPIED || (_c->currState == BOMB && _c->occupiedBy != nullptr))
             {

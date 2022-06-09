@@ -24,15 +24,15 @@ private:
     
     int range; /** *@brief range of players bombs */
 
-public:
-    CPlayer(char _s);
-
     /**
      * @brief places a bomb to CCell _c
      * 
      * @param _c Cell to place a bomb to
      */
     std::shared_ptr<CWeapon> placeBomb();
+
+public:
+    CPlayer(char _s);
 
     /**
      * @brief changes range of bombs to range + _r

@@ -39,13 +39,10 @@ std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int
     if(((_i == 'o') || (_i == 'e')))
         return placeBomb();
 
-    if(currBomb != nullptr && currBomb != nullptr && currBomb->update())
+    if(currBomb != nullptr && currBomb->update())
     {
-        std::vector<std::pair<int, int>> toAttack = currBomb->explode();
-/*
-        destroy(toAttack, player);
-        
-*/
+        _tA = currBomb->explode();
+
         currBomb = nullptr;
         placedBomb = 1;
     }
