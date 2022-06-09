@@ -6,7 +6,6 @@ CPlayer::CPlayer(char _s) : CCharacter(_s)
     speed = 1;
     placedBomb = 1;
     currBomb = nullptr;
-    score = 0;
     range = 2;
     tTE = 4;
 }
@@ -35,11 +34,11 @@ void CPlayer::changeTTE()
     if(tTE != 1) tTE--;
 }
 
-std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
+std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA)
 {
     if(((_i == 'o') || (_i == 'e')))
         return placeBomb();
-        
+
     if(currBomb != nullptr && currBomb != nullptr && currBomb->update())
     {
         std::vector<std::pair<int, int>> toAttack = currBomb->explode();

@@ -32,6 +32,8 @@ public:
 
     cT characterType;
 
+    int score;
+
     /**
      * @param _s stands for skin
      * @return void return value;
@@ -42,7 +44,7 @@ public:
      * @param is virtual, can't be called from here(works from CPlayer(idle) and CEnemy(essential))
      * @return void return value
      */ 
-    virtual std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine) = 0;
+    virtual std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA) = 0;
 
     virtual ~CCharacter();
 };

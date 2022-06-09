@@ -26,7 +26,7 @@ bool CEnemy::onePlace()
 
     return 1;
 }
-std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
+std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA)
 {
     int dir = 5;
     int rndm = std::rand() % speed;

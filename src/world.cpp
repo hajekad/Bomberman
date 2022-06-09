@@ -54,7 +54,7 @@ void CWorld::parseD(std::vector<std::pair<int, int>> & _d)
     }
 }
 
-void CWorld::destroy(std::vector<std::pair<int, int>> & _d, CPlayer * _p)
+void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCharacter> _p)
 {
     parseD(_d);
 
@@ -66,7 +66,7 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d, CPlayer * _p)
 
             if(_c->currState == OCCUPIED || (_c->currState == BOMB && _c->occupiedBy != nullptr))
             {
-                _p->score += 100;
+                _p.get()->score += 100;
                 for(auto j = characters.begin(); j != characters.end(); j++)
                 {
                     if((j->get()->line == i->first) && (j->get()->column == i->second))
@@ -125,7 +125,10 @@ int CWorld::update(char _i)
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
 
-        std::shared_ptr<CWeapon> newBomb = _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine);
+        std::vector<std::pair<int, int>> toAttack;
+        std::shared_ptr<CWeapon> newBomb = _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine, toAttack);
+        if(!toAttack.empty()) destroy(toAttack, *_ic);
+
         if(newBomb != nullptr)
         {
             std::cerr<<"C++standard xd\n";

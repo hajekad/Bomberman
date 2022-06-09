@@ -52,7 +52,7 @@ public:
      * @param _d vector of all influenced cells
      * @param _p owner of the exploding bomb
      */
-    void destroy(std::vector<std::pair<int, int>> & _d, CPlayer * _p);
+    void destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCharacter> _p);
 
     /**
      * @brief updates the state of map in time, detonates bomb and decides the next move of the game

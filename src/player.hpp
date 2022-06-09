@@ -15,8 +15,6 @@ public:
     
     bool placedBomb; /** *@brief true if player can place a bomb */
     
-    int score; /** *@brief current score of this player */
-
 private:
     int damage; /** *@brief legacy unused variable */
 
@@ -55,5 +53,5 @@ public:
      * @param playerAtCol 
      * @param playerAtLine 
      */
-    std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine);
+    std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA);
 };
