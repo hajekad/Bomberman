@@ -34,7 +34,7 @@ void CPlayer::changeTTE()
 
 std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA)
 {
-    if(((_i == _BOMB_BUTTON_PLAYER_ONE) && !second) || ((_i == _BOMB_BUTTON_PLAYER_TWO) && second))
+    if(((_i == _BOMB_BUTTON_PLAYER_ONE) && second) || ((_i == _BOMB_BUTTON_PLAYER_TWO) && !second))
         return placeBomb();
 
     if(currBomb != nullptr && currBomb->update())
