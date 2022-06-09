@@ -40,11 +40,13 @@ public:
      */
     CCharacter(char _s);
 
+    virtual ~CCharacter();
+    
     /** 
      * @param is virtual, can't be called from here(works from CPlayer(idle) and CEnemy(essential))
      * @return void return value
      */ 
     virtual std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA) = 0;
 
-    virtual ~CCharacter();
+    virtual void change() = 0;
 };

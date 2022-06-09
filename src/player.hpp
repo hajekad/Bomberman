@@ -54,4 +54,6 @@ public:
      * @param playerAtLine 
      */
     std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA);
+
+    void change();
 };

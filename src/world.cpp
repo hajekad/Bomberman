@@ -98,17 +98,14 @@ int CWorld::update(char _i)
     CCharacter * player = characters.begin()->get();
     auto tmp = characters.begin();
     tmp++;
-    //CCharacter * playerTwo = (CCharacter *) tmp->get();
+    CCharacter * playerTwo = tmp->get();
 
     int playerAtLine = player->line;
     int playerAtCol = player->column;
-/*
-    if(playerCnt > 1)
-    {
-        int playerTwoAtLine = playerTwo->line;
-        int playerTwoAtCol = playerTwo->column;
-    }
-*/
+
+    int playerTwoAtLine = playerTwo->line;
+    int playerTwoAtCol = playerTwo->column;
+
     hasPlayer = 0;
     hasEnemy = 0;
     playerCnt = 0;
@@ -128,7 +125,11 @@ int CWorld::update(char _i)
         int newCol = _ic->get()->column;
 
         std::vector<std::pair<int, int>> toAttack;
+
         std::shared_ptr<CWeapon> newBomb = _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine, toAttack);
+        if(loopifier % 2 && playerCnt > 1)
+            newBomb = _ic->get()->decideNextMove(_i, playerTwoAtCol, playerTwoAtLine, toAttack);
+
         if(!toAttack.empty()) destroy(toAttack, *_ic);
 
         if(newBomb != nullptr)
@@ -164,15 +165,12 @@ int CWorld::update(char _i)
             _ic->get()->line = newLine;
             _ic->get()->column = newCol;
 
-            if(worldMap.at(newLine).at(newCol).hasBonus && _ic->get()->characterType == PLAYER)
+            if(worldMap.at(newLine).at(newCol).hasBonus)
             {
-                CPlayer * _tp = (CPlayer *) _ic->get();
                 worldMap.at(newLine).at(newCol).hasBonus = 0;
                 worldMap.at(newLine).at(newCol).texture = ' ';
-                int rand = std::rand() % 3;
 
-                if(rand) _tp->changeRange(rand);
-                else _tp->changeTTE();
+                _ic->get()->change();
             }
         }
         else if((worldMap.at(newLine).at(newCol).currState == OCCUPIED)
@@ -184,10 +182,10 @@ int CWorld::update(char _i)
 
     if(!hasEnemy)
     {
-        CPlayer * _o1 = (CPlayer *) _p1.get();
+        CCharacter * _o1 = _p1.get();
         if(_p2.get() != nullptr)
         {
-            CPlayer * _o2 = (CPlayer *) _p2.get();
+            CCharacter * _o2 = _p2.get();
     
     
             if(_o1->score == _o2->score)

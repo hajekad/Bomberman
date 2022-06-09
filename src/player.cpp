@@ -52,13 +52,21 @@ std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int
         switch(_i)
         {
             case 'i': _i = 'w'; break; // UP
-            case 'j': _i = 'd'; break; // RIGHT
+            case 'l': _i = 'd'; break; // RIGHT
             case 'k': _i = 's'; break; // DOWN
-            case 'l': _i = 'a'; break; // LEFT
+            case 'j': _i = 'a'; break; // LEFT
 
-            default: break;
+            default: _i = 'H'; break;
         }
     }
 
    return nullptr;     
+}
+
+void CPlayer::change()
+{
+    int rand = std::rand() % 3;
+
+    if(rand) changeRange(rand);
+    else changeTTE();
 }

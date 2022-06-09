@@ -92,3 +92,8 @@ std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int 
     }
     return nullptr;
 }
+
+void CEnemy::change()
+{
+    if(speed > 4) speed--; // fastest playable speed
+}
