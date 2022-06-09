@@ -21,9 +21,8 @@ https://en.wikipedia.org/wiki/Bomberman
 
 ## Specifikace zadání
 Budu vytvářet hru založenou na myšlence japonské hry Bakudan Otoko s režimy singleplayer a local
-    multiplayer. Oproti puvodní hře se bude v mé verzi implementován systém nemocí, které budou 
-    přenosné mezi všemi charaktery ve hře. Dále budu mít ruzne typy zbraní, s tím že primární zustane
-    bomba.
+    multiplayer. Oproti puvodní hře se bude v mé verzi implementován systém bonusů, které budou 
+    přenosné mezi všemi hraci ve hře. Dále budu mít ruzne chovani bomby.
     Hraci si na zacatku hry mohou vybrat jakým utf-8 znakem chtějí být reprezentováni.
 
 Level:
@@ -55,6 +54,7 @@ Třídy:
     Viz UML class diagram...
 
 Polymorfysmus:
-    Využije se pro parent CCharacter a childy CEnemy, CPlayer a CNpc.
+    Využije se pro parent CCharacter a childy CEnemy, CPlayer.
     Společné metody childu budou například move - kdy se charakter posune o 1 pozici do zadaného směru
-                                           -perish() - smrt charaktera
+                                           -perish() - smrt charaktera.
+    Navic kod vyuziva C-like static cast pro praci s nimi.
