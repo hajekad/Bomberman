@@ -34,7 +34,7 @@ public:
      * 
      * @param _c Cell to place a bomb to
      */
-    void placeBomb(CCell & _c);
+    std::shared_ptr<CWeapon> placeBomb();
 
     /**
      * @brief changes range of bombs to range + _r
@@ -55,5 +55,5 @@ public:
      * @param playerAtCol 
      * @param playerAtLine 
      */
-    void decideNextMove(char & _i, int playerAtCol, int playerAtLine);
+    std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine);
 };

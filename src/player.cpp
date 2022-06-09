@@ -11,15 +11,18 @@ CPlayer::CPlayer(char _s) : CCharacter(_s)
     tTE = 4;
 }
 
-void CPlayer::placeBomb(CCell & _c)
+std::shared_ptr<CWeapon> CPlayer::placeBomb()
 {
     if(placedBomb)
     {
-        _c.currState = BOMB;
-        _c.bomb = std::make_shared<CWeapon>(range, tTE,line, column);
-        currBomb = _c.bomb;
+        std::cerr << "BOMB\n";
+        std::shared_ptr<CWeapon> _c;
+        _c = std::make_shared<CWeapon>(range, tTE,line, column);
+        currBomb = _c;
         placedBomb = 0;
-    }
+        return _c;
+    }   
+    return nullptr;
 }
 
 void CPlayer::changeRange(int _r)
@@ -32,7 +35,34 @@ void CPlayer::changeTTE()
     if(tTE != 1) tTE--;
 }
 
-void CPlayer::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
+std::shared_ptr<CWeapon> CPlayer::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
 {
-    return;
+    if(((_i == 'o') || (_i == 'e')))
+        return placeBomb();
+        
+    if(currBomb != nullptr && currBomb != nullptr && currBomb->update())
+    {
+        std::vector<std::pair<int, int>> toAttack = currBomb->explode();
+/*
+        destroy(toAttack, player);
+        
+*/
+        currBomb = nullptr;
+        placedBomb = 1;
+    }
+
+    if(second)
+    {
+        switch(_i)
+        {
+            case 'i': _i = 'w'; break; // UP
+            case 'j': _i = 'd'; break; // RIGHT
+            case 'k': _i = 's'; break; // DOWN
+            case 'l': _i = 'a'; break; // LEFT
+
+            default: break;
+        }
+    }
+
+   return nullptr;     
 }

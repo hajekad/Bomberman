@@ -52,8 +52,6 @@ void CWorld::parseD(std::vector<std::pair<int, int>> & _d)
         if(worldMap.at(i->first).at(i->second).currState == UNBREAKABLE) break;
         _d.push_back(*i);
     }
-    for(auto i: _d)
-        std::cerr<<"parseD: "<<i.first<<" "<<i.second<<std::endl;
 }
 
 void CWorld::destroy(std::vector<std::pair<int, int>> & _d, CPlayer * _p)
@@ -95,10 +93,10 @@ int CWorld::update(char _i)
 {
     if(characters.begin()->get()->characterType != PLAYER) return 1;
 
-    CPlayer * player = (CPlayer *) characters.begin()->get();
+    CCharacter * player = characters.begin()->get();
     auto tmp = characters.begin();
     tmp++;
-    CPlayer * playerTwo = (CPlayer *) tmp->get();
+    //CCharacter * playerTwo = (CCharacter *) tmp->get();
 
     int playerAtLine = player->line;
     int playerAtCol = player->column;
@@ -109,46 +107,6 @@ int CWorld::update(char _i)
         int playerTwoAtCol = playerTwo->column;
     }
 */
-    if(_i == 'e')
-        player->placeBomb(worldMap.at(player->line).at(player->column));
-
-    if(_i == 'o' && playerCnt > 1)
-        playerTwo->placeBomb(worldMap.at(playerTwo->line).at(playerTwo->column));
-
-    int k = 0;
-
-    if(player->currBomb != nullptr && player->currBomb != nullptr && player->currBomb->update())
-    {
-        std::vector<std::pair<int, int>> toAttack = player->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
-
-        destroy(toAttack, player);
-        
-        worldMap.at(player->currBomb->line).at(player->currBomb->column).bomb = nullptr;
-        
-        if(player != nullptr)
-        {
-            player->currBomb = nullptr;
-            player->placedBomb = 1;
-        }
-        scorePO = ((CPlayer *) _p1.get())->score;
-    }
-    else if(playerCnt > 1 && playerTwo != nullptr && playerTwo->currBomb != nullptr && playerTwo->currBomb->update())
-    {
-        std::vector<std::pair<int, int>> toAttackTwo = playerTwo->currBomb->explode(int(worldMap.size()), int(worldMap.at(1).size()));
-
-        destroy(toAttackTwo, playerTwo);
-        worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).bomb = nullptr;
-        worldMap.at(playerTwo->currBomb->line).at(playerTwo->currBomb->column).currState = FREE;
-        
-        
-        if(playerTwo != nullptr)
-        {
-            playerTwo->currBomb = nullptr;
-            playerTwo->placedBomb = 1;
-        }
-        scorePT = ((CPlayer *) _p2.get())->score;
-    }
-
     hasPlayer = 0;
     hasEnemy = 0;
     playerCnt = 0;
@@ -163,35 +121,25 @@ int CWorld::update(char _i)
             playerCnt++;
         }
         if(_ic->get()->characterType == ENEMY) hasEnemy = 1;
+
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
-        k++;
 
-        _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine);
-
-        if(_ic->get()->characterType == PLAYER && loopifier == 2)
+        std::shared_ptr<CWeapon> newBomb = _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine);
+        if(newBomb != nullptr)
         {
-            switch(_i)
-            {
-                case 'i': newLine--; break;
-                case 'j': newCol--; break;
-                case 'k': newLine++; break;
-                case 'l': newCol++; break;
-
-                default: break;
-            }
+            std::cerr<<"C++standard xd\n";
+            worldMap.at(_ic->get()->line).at(_ic->get()->column).bomb = newBomb;
+            worldMap.at(_ic->get()->line).at(_ic->get()->column).currState = BOMB;
         }
-        else
+        switch(_i)
         {
-            switch(_i)
-            {
-                case 'w': newLine--; break;
-                case 'a': newCol--; break;
-                case 's': newLine++; break;
-                case 'd': newCol++; break;
+            case 'w': newLine--; break;
+            case 'a': newCol--; break;
+            case 's': newLine++; break;
+            case 'd': newCol++; break;
 
-                default: break;
-            }
+            default: break;
         }
 
         _ic->get()->hist[(_ic->get()->iH)] = newCol + newLine;
@@ -224,9 +172,7 @@ int CWorld::update(char _i)
         }
         else if((worldMap.at(newLine).at(newCol).currState == OCCUPIED)
                 && ((newLine != _ic->get()->line) || newCol != _ic->get()->column)
-                && (worldMap.at(newLine).at(newCol).occupiedBy.get()->characterType == PLAYER)) return 1;
-
-        //if(_ic->get()->characterType == PLAYER) _i = 'H';
+                && (worldMap.at(newLine).at(newCol).occupiedBy.get()->characterType == PLAYER)) return 1; // player bumped into a living thing and died
     }
 
     if(!hasPlayer) return 1;
@@ -254,23 +200,8 @@ int CWorld::update(char _i)
 
 bool CWorld::isnum(char _a)
 {
-    switch(_a)
-    {
-        case '0': break;
-        case '1': break;
-        case '2': break;
-        case '3': break;
-        case '4': break;
-        case '5': break;
-        case '6': break;
-        case '7': break;
-        case '8': break;
-        case '9': break;
-
-        default: return false;
-    }
-
-    return true;
+    if(_a >= '0' && _a <= '9') return 1;
+    return 0;
 }
 
 CWorld::CWorld(std::string fileName, WINDOW * _w)
@@ -310,7 +241,6 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
                     characters.push_back(currCell.occupiedBy);
                     help++;
                     if(characters.back().get()->characterType == PLAYER) playerCnt++;
-                    //std::cerr <<"HELP"<< help << std::endl;
                 }
                 currLine.push_back(currCell);
                 if(i == copy) worldMap.push_back(currLine);
@@ -330,5 +260,6 @@ CWorld::CWorld(std::string fileName, WINDOW * _w)
     {
         _p1 = *(characters.begin());
         _p2 = *(++(characters.begin()));
+        _p2.get()->second = 1;
     }
 }

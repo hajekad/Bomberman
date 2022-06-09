@@ -26,8 +26,7 @@ bool CEnemy::onePlace()
 
     return 1;
 }
-
-void CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
+std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
 {
     int dir = 5;
     int rndm = std::rand() % speed;
@@ -77,18 +76,19 @@ void CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine)
     switch(dir)
     {
         case 0:
-            _i = 'w';
+            _i = 'w'; // UP
             break;
         case 1:
-            _i = 'd';
+            _i = 'd'; // RIGHT
             break;
         case 2:
-            _i = 's';
+            _i = 's'; // DOWN
             break;
         case 3:
-            _i = 'a';
+            _i = 'a'; // LEFT
             break;
         default:
             _i = 'H';
     }
+    return nullptr;
 }

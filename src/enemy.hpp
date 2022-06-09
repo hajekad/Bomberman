@@ -31,5 +31,5 @@ public:
      * @param playerAtCol desired column of an enemy
      * @param playerAtLine desired line of an enemy
      */
-    void decideNextMove(char & _i, int playerAtCol, int playerAtLine);
+    std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine);
     };

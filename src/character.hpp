@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <random>
 
+#include "weapon.hpp"
+
 enum cT
 {
     PLAYER,
@@ -26,6 +28,8 @@ public:
 
     int iH; /** *@brief history array iterrator */
 
+    bool second;
+
     cT characterType;
 
     /**
@@ -38,7 +42,7 @@ public:
      * @param is virtual, can't be called from here(works from CPlayer(idle) and CEnemy(essential))
      * @return void return value
      */ 
-    virtual void decideNextMove(char & _i, int playerAtCol, int playerAtLine) = 0;
+    virtual std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine) = 0;
 
     virtual ~CCharacter();
 };

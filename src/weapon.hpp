@@ -46,5 +46,5 @@ public:
      * @param _cC column to explode on
      * @return std::vector<std::pair<int, int>> for destroyed cells 
      */
-    std::vector<std::pair<int, int>> explode(int _lC, int _cC);
+    std::vector<std::pair<int, int>> explode();
 };

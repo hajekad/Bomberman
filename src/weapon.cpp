@@ -20,7 +20,7 @@ bool CWeapon::update()
     return 0;
 }
 
-std::vector<std::pair<int, int>> CWeapon::explode(int _lC, int _cC)
+std::vector<std::pair<int, int>> CWeapon::explode()
 {
     std::vector<std::pair<int, int>> ret;
 
@@ -38,11 +38,6 @@ std::vector<std::pair<int, int>> CWeapon::explode(int _lC, int _cC)
     }
     dirCnt = 4;
     ret.push_back(std::make_pair(dirCnt, dirCnt));
-
-    for(auto it = ret.begin(); it != ret.end(); it++)
-    {
-        std::cerr << "line: " << it->first << "column: " << it->second << std::endl;
-    }
 
     return ret;
 }

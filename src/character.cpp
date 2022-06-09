@@ -3,7 +3,7 @@
 CCharacter::CCharacter(char _s)
 {
     skin = _s;
-
+    second = 0;
     if(_s == 'P') characterType = PLAYER;
     else if(_s == 'E') characterType = ENEMY;
 
