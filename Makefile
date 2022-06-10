@@ -2,7 +2,7 @@ PROG		:= hajekad3
 
 CXX 		:= g++
 
-LD_FLAGS 	:= -Wall --pedantic -std=c++14 -g
+LD_FLAGS 	:= -Wall --pedantic -std=c++14
 CXX_FLAGS	:= $(LD_FLAGS) -c
 
 OBJS 		:= main.o cell.o world.o gameLoop.o vigilante.o menu.o character.o player.o enemy.o weapon.o
@@ -20,11 +20,11 @@ run: $(PROG)
 	./$(PROG)
 
 all:
-	make
+	make -j 8
 	make doc
 
 compile:
-	make
+	make -j 8
 
 clean:
 	rm *.o $(PROG)
