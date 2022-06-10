@@ -120,7 +120,7 @@ int CWorld::update(char _i)
             hasPlayer = true;
             playerCnt++;
         }
-        if(_ic->get()->characterType == ENEMY) hasEnemy = true;
+        if(_ic->get()->characterType == ENEMY || _ic->get()->characterType == VIGILANTE) hasEnemy = true;
 
         int newLine = (*_ic).get()->line;
         int newCol = _ic->get()->column;
