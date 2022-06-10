@@ -1,18 +1,26 @@
-#include "enemy.hpp"
+#include "vigilante.hpp"
 
-CEnemy::CEnemy(char _s) : CCharacter(_s)
+CVigilante::CVigilante(char _s) : CCharacter(_s)
 {
+    placedBomb = true;
+
+    currBomb = nullptr;
+
+    range = _START_RANGE;
+
+    tTE = _START_TIME_TO_EXPLODE * _LONGER_TIME;
+
     hp = _START_HP;
 
     panicCnt = 0;
 
-    characterType = ENEMY;
+    characterType = VIGILANTE;
 
     for(int i = 0; i < _PANIC_ARRAY_SIZE; i++)
-	hist[i] = i;
+	    hist[i] = i;
 }
 
-bool CEnemy::onePlace()
+bool CVigilante::onePlace()
 {
     int first = hist[0];
 
@@ -26,8 +34,16 @@ bool CEnemy::onePlace()
 
     return true;
 }
-std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA)
+std::shared_ptr<CWeapon> CVigilante::decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA)
 {
+    if(currBomb != nullptr && currBomb->update())
+    {
+        _tA = currBomb->explode();
+
+        currBomb = nullptr;
+        placedBomb = true;
+    }
+    
     int dir = _INIT_DIR;
     int rndm = std::rand() % speed;
 
@@ -87,13 +103,28 @@ std::shared_ptr<CWeapon> CEnemy::decideNextMove(char & _i, int playerAtCol, int 
         case 3:
             _i = _LEFT;
             break;
+        case 4:
+            return placeBomb();
         default:
             _i = _STAY;
     }
     return nullptr;
 }
 
-void CEnemy::change()
+void CVigilante::change()
 {
-    if(speed > _MAX_SPEED) speed--; // fastest playable speed
+    return;
+}
+
+std::shared_ptr<CWeapon> CVigilante::placeBomb()
+{
+    if(placedBomb)
+    {
+        std::shared_ptr<CWeapon> _c;
+        _c = std::make_shared<CWeapon>(range, tTE,line, column);
+        currBomb = _c;
+        placedBomb = 0;
+        return _c;
+    }   
+    return nullptr;
 }

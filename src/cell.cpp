@@ -18,6 +18,11 @@ CCell::CCell(char _c)
         occupiedBy = std::make_shared<CEnemy>(_c);
         currState = OCCUPIED;
     }
+    else if(_c == _VIGILANTE)
+    {
+        occupiedBy = std::make_shared<CVigilante>(_c);
+        currState = OCCUPIED;
+    }
     else if(_c == _BONUS)
     {
         currState = FREE;

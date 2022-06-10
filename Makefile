@@ -2,10 +2,10 @@ PROG		:= hajekad3
 
 CXX 		:= g++
 
-LD_FLAGS 	:= -Wall --pedantic -std=c++14
+LD_FLAGS 	:= -Wall --pedantic -std=c++14 -g
 CXX_FLAGS	:= $(LD_FLAGS) -c
 
-OBJS 		:= main.o cell.o world.o gameLoop.o menu.o character.o player.o enemy.o weapon.o
+OBJS 		:= main.o cell.o world.o gameLoop.o vigilante.o menu.o character.o player.o enemy.o weapon.o
  
 output: $(OBJS)
 	$(CXX) $(LD_FLAGS) -o $(PROG) $(OBJS) -lncurses

@@ -56,7 +56,6 @@ void CWorld::parseD(std::vector<std::pair<int, int>> & _d)
 
 void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCharacter> _p)
 {
-    std::cerr << "ultimATWE DESTRUCTION\n";
     parseD(_d);
 
     for(auto i = _d.begin(); i != (_d.end()); i++)
@@ -106,11 +105,13 @@ int CWorld::update(char _i)
     int playerTwoAtLine = playerTwo->line;
     int playerTwoAtCol = playerTwo->column;
 
+    ///nulls the control parameters of the game state
     hasPlayer = false;
     hasEnemy = false;
     playerCnt = 0;
     int loopifier = 0;
 
+    ///update all the characters alive and mocve them around
     for(auto _ic = characters.begin(); _ic != characters.end(); _ic++)
     {
         loopifier++;
@@ -126,18 +127,23 @@ int CWorld::update(char _i)
 
         std::vector<std::pair<int, int>> toAttack;
 
-        std::shared_ptr<CWeapon> newBomb = _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine, toAttack);
+        /// decides the desired direction to move to or places a bomb to a currently occupied cell
+        std::shared_ptr<CWeapon> newBomb = nullptr;
         if(loopifier % 2 && playerCnt > 1)
             newBomb = _ic->get()->decideNextMove(_i, playerTwoAtCol, playerTwoAtLine, toAttack);
+        else
+            newBomb = _ic->get()->decideNextMove(_i, playerAtCol, playerAtLine, toAttack);
 
         if(!toAttack.empty()) destroy(toAttack, *_ic);
 
+        ///plants the bomb
         if(newBomb != nullptr)
         {
-            std::cerr<<"C++standard xd\n";
             worldMap.at(_ic->get()->line).at(_ic->get()->column).bomb = newBomb;
             worldMap.at(_ic->get()->line).at(_ic->get()->column).currState = BOMB;
         }
+
+        ///provides new desired coordinates
         switch(_i)
         {
             case _UP: newLine--; break;
@@ -148,10 +154,12 @@ int CWorld::update(char _i)
             default: break;
         }
 
+        ///moves the history iterator
         _ic->get()->hist[(_ic->get()->iH)] = newCol + newLine;
         (_ic->get()->iH)++;
         (_ic->get()->iH) %= _PANIC_ARRAY_SIZE;
 
+        ///actually moves the character and updates the world map
         if((worldMap.at(newLine).at(newCol).currState == FREE) && ((newLine != _ic->get()->line) || newCol != _ic->get()->column))
         {
             worldMap.at(newLine).at(newCol).occupiedBy = *_ic;
@@ -178,8 +186,10 @@ int CWorld::update(char _i)
                 && (worldMap.at(newLine).at(newCol).occupiedBy.get()->characterType == PLAYER)) return 1; // player bumped into a living thing and died
     }
 
+    ///returns to menu
     if(!hasPlayer) return 1;
 
+    ///returns the winning score
     if(!hasEnemy)
     {
         CCharacter * _o1 = _p1.get();

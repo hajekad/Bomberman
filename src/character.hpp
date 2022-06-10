@@ -20,7 +20,7 @@
 enum cT
 {
     PLAYER,
-    NPC,
+    VIGILANTE,
     ENEMY
 };
 

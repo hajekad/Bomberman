@@ -4,9 +4,11 @@
 
 #include "player.hpp"
 #include "enemy.hpp"
+#include "vigilante.hpp"
 
 #define _PLAYER 'P'
 #define _ENEMY 'E'
+#define _VIGILANTE 'V'
 #define _BONUS 'B'
 #define _DESTROYABLE '@'
 #define _FREE ' '
