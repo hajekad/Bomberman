@@ -7,6 +7,13 @@ CPixel::CPixel(WINDOW * _w) : CRender(_w)
 
 void CPixel::draw()
 {
+    init_pair(0, COLOR_GREEN, COLOR_BLACK);
+    init_pair(1, COLOR_GREEN, COLOR_RED);
+    init_pair(3, COLOR_GREEN, COLOR_YELLOW);
+    init_pair(4, COLOR_GREEN, COLOR_BLUE);
+    init_pair(5, COLOR_GREEN, COLOR_MAGENTA);
+    init_pair(6, COLOR_GREEN, COLOR_CYAN);
+    init_pair(7, COLOR_GREEN, COLOR_WHITE);
     int _l, _c;
     _l = _c = 1;
 
@@ -14,12 +21,17 @@ void CPixel::draw()
     {
         for(auto j: *i)
         {
+            std::cerr << j << std::endl;
             wmove(window, _l, _c);
+
             start_color();
-            init_pair(2, COLOR_GREEN, j);
-            wattron(window,COLOR_PAIR(2));
-            waddch(window, 'X');
-            wattroff(window,COLOR_PAIR(2));
+
+            wattron(window,COLOR_PAIR(j));
+
+            waddch(window, ' ');
+
+            wattroff(window,COLOR_PAIR(j));
+
             _c++;
         }
         _c = 1;
@@ -55,26 +67,26 @@ void CPixel::render(std::vector<std::vector<CCell>> & _m)
             if(j->currState == OCCUPIED)
             {
                 if(j->occupiedBy.get()->characterType == PLAYER)
-                    player(3 * y, 3 * x);
+                    player(5 * y, 3 * x);
                 else
-                    badGuy(3 * y, 3 * x);
+                    badGuy(5 * y, 3 * x);
             }
             else if(j->bomb != nullptr)
             {
-                bomb(3 * y, 3 * x);
+                bomb(5 * y, 3 * x);
             }
             else 
             {
                 switch(j->currState)
                 {
                     case FREE:
-                        free(3 * y, 3 * x);
+                        free(5 * y, 3 * x);
                         break;
                     case DESTROYABLE:
-                        destroyable(3 * y, 3 * x);
+                        destroyable(5 * y, 3 * x);
                         break;
                     case UNBREAKABLE:
-                        unbreakable(3 * y, 3 * x);
+                        unbreakable(5 * y, 3 * x);
                         break;
 
                     default: break;
@@ -140,8 +152,8 @@ void CPixel::bomb(int _l, int _c)
     int blocks[]
     {
         COLOR_BLUE, COLOR_BLUE,  COLOR_YELLOW,
-        COLOR_BLUE, COLOR_WHITE, COLOR_CYAN,
-        COLOR_BLACK, COLOR_BLACK,  COLOR_RED,
+        COLOR_BLUE, COLOR_WHITE, COLOR_BLUE,
+        COLOR_BLACK, COLOR_BLACK,  COLOR_BLACK,
         COLOR_BLACK, COLOR_BLACK, COLOR_BLACK,
         COLOR_BLACK, COLOR_BLACK, COLOR_BLACK
     };
