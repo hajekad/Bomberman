@@ -15,7 +15,10 @@ void CMenu::render(WINDOW * _w)
     wmove(_w, 3, getmaxx(_w)/2 - 6);
     wprintw(_w, "Load file[F]");
 
-    wmove(_w, 4, getmaxx(_w)/2 - 4);
+    wmove(_w, 4, getmaxx(_w)/2 - 10);
+    wprintw(_w, "Change graphics[G]");
+
+    wmove(_w, 5, getmaxx(_w)/2 - 4);
     wprintw(_w, "EXIT[e]");
 
     refresh();

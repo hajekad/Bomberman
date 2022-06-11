@@ -14,6 +14,7 @@
 
 #define _NEW_GAME 'n'
 #define _LOAD_FILE 'f'
+#define _CHANGE_GRAPHICS 'g'
 #define _EXIT 'e'
 #define _ESC 27
 
@@ -33,6 +34,8 @@ class CGameLoop
         std::string fileName;
 
         std::unique_ptr<CRender> renderer;
+
+        bool lowGraphics;
 
     public:
         CGameLoop(WINDOW * _w);

@@ -16,6 +16,8 @@ CGameLoop::CGameLoop(WINDOW * _w)
     renderer = std::make_unique<CAscii>(_w);
 
     currMap = nullptr;
+
+    lowGraphics = true;
 }
 
 void CGameLoop::start(WINDOW * _w)
@@ -66,6 +68,19 @@ void CGameLoop::mainThread(WINDOW * _w)
                     if(currMap != nullptr) delete currMap;
                     currMap = new CWorld(fileName, _w);
                 }
+                else if(tmp == _CHANGE_GRAPHICS)
+                {
+                    if(lowGraphics)
+                    {
+                        renderer = std::make_unique<CPixel>(_w);
+                        lowGraphics = false;
+                    }
+                    else
+                    {
+                        renderer = std::make_unique<CAscii>(_w);
+                        lowGraphics = true;
+                    }
+                }
                 else if(tmp == _EXIT) running = false;
             }
         }
@@ -96,59 +111,6 @@ void CGameLoop::mainThread(WINDOW * _w)
         std::this_thread::sleep_until(t);
     }
     if(currMap != nullptr) delete currMap;
-}
-
-void CGameLoop::render(WINDOW * _w)
-{
-    wclear(_w);
-    box(_w, 0, 0);
-
-    int foo = 0;
-
-    int x = 1;
-    int y = 1;
-
-    //bool hasplayer = 0;
-    
-    for(auto i = currMap->worldMap.begin(); i != currMap->worldMap.end(); i++)
-    {
-        foo++;
-        for(auto j = i->begin(); j != i->end(); j++)
-        {
-            wmove(_w, y, x);
-            char _c[1];
-            _c[0] = j->texture;
-
-            //if(_c[0] == 'P') hasplayer = 1;
-
-            if(j->currState == OCCUPIED)
-            {
-                start_color();
-                init_pair(2, COLOR_BLACK, COLOR_BLUE);
-                wattron(_w,COLOR_PAIR(2));
-                waddch(_w, _c[0]);
-                wattroff(_w,COLOR_PAIR(2));
-            }
-            else if(j->bomb != nullptr)
-            {
-                start_color();
-                init_pair(2, COLOR_BLACK, COLOR_RED);
-                wattron(_w,COLOR_PAIR(2));
-                _c[0] = 'o';
-                waddch(_w, _c[0]);
-                wattroff(_w,COLOR_PAIR(2));
-            }
-            else wprintw(_w, _c);
-            x++;
-        }
-        y++;
-        x = 1;
-    }
-
-    //if(!hasplayer) inMenu = 1;
-    
-    refresh();
-    wrefresh(_w);
 }
 
 void CGameLoop::writeToFile(int _t)
