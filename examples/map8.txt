@@ -1,9 +1,9 @@
 +---------------------~-----------------------+
-|                    #P#                   B  |
-|                     #                       |
-|                             EEEEEEEEE       |
-|                    B                        |
-|  EEEEEEEEEEEEEEEEEEEEEEEEEEE                |
-|                      E                   B  |
+|            @     @ #P#    @    #P#        B |
+|            @     @  #     @     #           |
+|VVVVVVVVVVVV@VVVVV@@@@@@@@@@ EEEEEEEEE       |
+|            @     @ B      @                 |
+|  EEEEEEEEEE@EEEEE@EEEEEEEE@E                |
+|            @     @   E    @              B  |
 +---------------------~-----------------------+
 0

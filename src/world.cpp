@@ -67,17 +67,19 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCha
 
             if(_c->currState == OCCUPIED || (_c->currState == BOMB && _c->occupiedBy != nullptr))
             {
-                _p.get()->score += _MORE_SCORE;
+                if(_p != nullptr) _p.get()->score += _MORE_SCORE;
                 for(auto j = characters.begin(); j != characters.end(); j++)
                 {
                     if((j->get()->line == i->first) && (j->get()->column == i->second))
                     {
+                        //std::vector<std::pair<int, int>> toAttackTwo;
+                        //destroy(toAttackTwo, *j);
                         characters.erase(j);
                         break;
                     }
                 }
 
-                _c->currState = FREE;
+                if(_c->currState != BOMB) _c->currState = FREE;
                 _c->occupiedBy = nullptr;
                 _c->texture = ' ';
             }

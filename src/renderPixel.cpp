@@ -7,6 +7,7 @@ CPixel::CPixel(WINDOW * _w) : CRender(_w)
 
 void CPixel::draw()
 {
+    wclear(window);
     init_pair(0, COLOR_GREEN, COLOR_BLACK);
     init_pair(1, COLOR_GREEN, COLOR_RED);
     init_pair(3, COLOR_GREEN, COLOR_YELLOW);
@@ -17,19 +18,28 @@ void CPixel::draw()
     int _l, _c;
     _l = _c = 1;
 
-    for(auto i = toBeDisplayed.begin(); i != toBeDisplayed.end(); i++)
+    auto i = toBeDisplayed.begin();
+    i++;
+    auto ib = toBeDisplayed.end();
+    ib--;
+
+    for(; i != ib; i++)
     {
-        for(auto j: *i)
+        auto j = i->begin();
+        j++;
+        auto jb = i->end();
+        jb--;
+        for(;j != jb; j++)
         {
             wmove(window, _l, _c);
 
             start_color();
 
-            wattron(window,COLOR_PAIR(j));
+            wattron(window,COLOR_PAIR(*j));
 
             waddch(window, ' ');
 
-            wattroff(window,COLOR_PAIR(j));
+            wattroff(window,COLOR_PAIR(*j));
 
             _c++;
         }
@@ -43,7 +53,6 @@ void CPixel::draw()
 void CPixel::render(std::vector<std::vector<CCell>> & _m)
 {
     toBeDisplayed.clear();
-    wclear(window);
     box(window, 0, 0);
     start_color();
     int foo = 0;
