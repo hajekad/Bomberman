@@ -11,8 +11,10 @@ char CGameLoop::getInput(WINDOW * _w)
     return _STAY;
 }
 
-CGameLoop::CGameLoop()
+CGameLoop::CGameLoop(WINDOW * _w)
 {
+    renderer = std::make_unique<CAscii>(_w);
+
     currMap = nullptr;
 }
 
@@ -86,7 +88,8 @@ void CGameLoop::mainThread(WINDOW * _w)
                 inMenu = 1;
             }
             
-            render(_w);
+            //render(_w);
+            renderer.get()->render(currMap->worldMap);
         }
 
         t += std::chrono::milliseconds(50);

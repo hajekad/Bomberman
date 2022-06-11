@@ -2,8 +2,6 @@
 
 int main()
 {
-  CGameLoop session;
-  
   initscr();
 
   int y, x;
@@ -15,6 +13,7 @@ int main()
   wrefresh(win);
   cbreak();
 
+  CGameLoop session(win);
   session.start(win);
 
   session.mainThread(win);

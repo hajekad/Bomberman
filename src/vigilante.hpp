@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 #include "character.hpp"
-#include "world.hpp"
 #include "weapon.hpp"
 
 #define _START_HP 15

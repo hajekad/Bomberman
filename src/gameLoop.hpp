@@ -9,6 +9,8 @@
 
 #include "menu.hpp"
 #include "world.hpp"
+#include "renderAscii.hpp"
+#include "renderPixel.hpp"
 
 #define _NEW_GAME 'n'
 #define _LOAD_FILE 'f'
@@ -30,8 +32,10 @@ class CGameLoop
 
         std::string fileName;
 
+        std::unique_ptr<CRender> renderer;
+
     public:
-        CGameLoop();
+        CGameLoop(WINDOW * _w);
 
         /**
          * @brief get input from player 
