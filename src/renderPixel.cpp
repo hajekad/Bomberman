@@ -5,8 +5,33 @@ CPixel::CPixel(WINDOW * _w) : CRender(_w)
     
 }
 
+void CPixel::draw()
+{
+    int _l, _c;
+    _l = _c = 1;
+
+    for(auto i = toBeDisplayed.begin(); i != toBeDisplayed.end(); i++)
+    {
+        for(auto j: *i)
+        {
+            wmove(window, _l, _c);
+            start_color();
+            init_pair(2, COLOR_GREEN, j);
+            wattron(window,COLOR_PAIR(2));
+            waddch(window, 'X');
+            wattroff(window,COLOR_PAIR(2));
+            _c++;
+        }
+        _c = 1;
+        _l++;
+    }
+    refresh();
+    wrefresh(window);
+}
+
 void CPixel::render(std::vector<std::vector<CCell>> & _m)
 {
+    toBeDisplayed.clear();
     wclear(window);
     box(window, 0, 0);
     start_color();
@@ -19,6 +44,11 @@ void CPixel::render(std::vector<std::vector<CCell>> & _m)
     
     for(auto i = _m.begin(); i != _m.end(); i++)
     {
+        for(int j = 0; j < 5; j++)
+        {
+            std::vector<int> tmp;
+            toBeDisplayed.push_back(tmp);
+        }
         foo++;
         for(auto j = i->begin(); j != i->end(); j++)
         {
@@ -53,11 +83,10 @@ void CPixel::render(std::vector<std::vector<CCell>> & _m)
             x++;
         }
         y++;
-        x = 1;
+        x = 0;
     }
     
-    refresh();
-    wrefresh(window);
+    draw();
 }
 
 void CPixel::player(int _l, int _c)
@@ -72,16 +101,11 @@ void CPixel::player(int _l, int _c)
         COLOR_MAGENTA, COLOR_BLUE, COLOR_MAGENTA
     };
 
-    for(int renderLine = 1; renderLine < 6; renderLine++)
+    for(int renderLine = 0; renderLine < 5; renderLine++)
     {
-        for(int renderColumn = 1; renderColumn < 4; renderColumn++)
+        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
         {
-            start_color();
-            move(_l + renderLine, _c + renderColumn);
-            init_pair(2, blocks[_ib], blocks[_ib]);
-            wattron(window,COLOR_PAIR(2));
-            waddch(window, '_');
-            wattroff(window,COLOR_PAIR(2));
+            toBeDisplayed.at(_l + renderLine).push_back(blocks[_ib]);
             _ib++;
         }
     }
@@ -100,16 +124,11 @@ void CPixel::badGuy(int _l, int _c)
         COLOR_RED, COLOR_BLUE, COLOR_RED
     };
 
-    for(int renderLine = 1; renderLine < 6; renderLine++)
+    for(int renderLine = 0; renderLine < 5; renderLine++)
     {
-        for(int renderColumn = 1; renderColumn < 4; renderColumn++)
+        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
         {
-            start_color();
-            move(_l + renderLine, _c + renderColumn);
-            init_pair(2, blocks[_ib], blocks[_ib]);
-            wattron(window,COLOR_PAIR(2));
-            waddch(window, '_');
-            wattroff(window,COLOR_PAIR(2));
+            toBeDisplayed.at(_l + renderLine).push_back(blocks[_ib]);
             _ib++;
         }
     }
@@ -127,16 +146,11 @@ void CPixel::bomb(int _l, int _c)
         COLOR_BLACK, COLOR_BLACK, COLOR_BLACK
     };
 
-    for(int renderLine = 1; renderLine < 6; renderLine++)
+    for(int renderLine = 0; renderLine < 5; renderLine++)
     {
-        for(int renderColumn = 1; renderColumn < 4; renderColumn++)
+        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
         {
-            start_color();
-            move(_l + renderLine, _c + renderColumn);
-            init_pair(2, blocks[_ib], blocks[_ib]);
-            wattron(window,COLOR_PAIR(2));
-            waddch(window, '.');
-            wattroff(window,COLOR_PAIR(2));
+            toBeDisplayed.at(_l + renderLine).push_back(blocks[_ib]);
             _ib++;
         }
     }
@@ -144,36 +158,20 @@ void CPixel::bomb(int _l, int _c)
 
 void CPixel::free(int _l, int _c)
 {
-    init_pair(2, COLOR_BLUE, COLOR_BLUE);
-    for(int renderLine = 1; renderLine < 6; renderLine++)
-    {
-        for(int renderColumn = 1; renderColumn < 4; renderColumn++)
-        {
-            start_color();
-            move(_l + renderLine, _c + renderColumn);
-            wattron(window,COLOR_PAIR(2));
-            waddch(window, '_');
-            wattroff(window,COLOR_PAIR(2));
-        }
-    }
+    for(int renderLine = 0; renderLine < 5; renderLine++)
+        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
+            toBeDisplayed.at(_l + renderLine).push_back(COLOR_BLUE);
 }
 
 void CPixel::destroyable(int _l, int _c)
 {
-    init_pair(2, COLOR_BLACK, COLOR_BLACK);
     int cnt = 0;
-    for(int renderLine = 1; renderLine < 6; renderLine++)
+    for(int renderLine = 0; renderLine < 5; renderLine++)
     {
-        for(int renderColumn = 1; renderColumn < 4; renderColumn++)
+        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
         {
-            start_color();
-            if(cnt % 2) init_pair(2, COLOR_BLUE, COLOR_BLUE);
-            else init_pair(2, COLOR_BLACK, COLOR_BLACK);
-
-            move(_l + renderLine, _c + renderColumn);
-            wattron(window,COLOR_PAIR(2));
-            waddch(window, '_');
-            wattroff(window,COLOR_PAIR(2));
+            if(cnt % 2) toBeDisplayed.at(_l + renderLine).push_back(COLOR_BLUE);
+            else toBeDisplayed.at(_l + renderLine).push_back(COLOR_BLACK);
 
             cnt++;
         }
@@ -182,16 +180,7 @@ void CPixel::destroyable(int _l, int _c)
 
 void CPixel::unbreakable(int _l, int _c)
 {
-    init_pair(2, COLOR_BLACK, COLOR_BLACK);
-    for(int renderLine = 1; renderLine < 6; renderLine++)
-    {
-        for(int renderColumn = 1; renderColumn < 4; renderColumn++)
-        {
-            start_color();
-            move(_l + renderLine, _c + renderColumn);
-            wattron(window,COLOR_PAIR(2));
-            waddch(window, '_');
-            wattroff(window,COLOR_PAIR(2));
-        }
-    }
+    for(int renderLine = 0; renderLine < 5; renderLine++)
+        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
+            toBeDisplayed.at(_l + renderLine).push_back(COLOR_BLACK);
 }

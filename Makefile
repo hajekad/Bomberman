@@ -5,7 +5,9 @@ CXX 		:= g++
 LD_FLAGS 	:= -Wall --pedantic -std=c++14
 CXX_FLAGS	:= $(LD_FLAGS) -c
 
-OBJS 		:= main.o cell.o world.o gameLoop.o vigilante.o menu.o character.o player.o enemy.o weapon.o
+out			:= err
+
+OBJS 		:= main.o cell.o world.o gameLoop.o vigilante.o menu.o character.o player.o enemy.o weapon.o renderer.o renderAscii.o renderPixel.o
  
 output: $(OBJS)
 	$(CXX) $(LD_FLAGS) -o $(PROG) $(OBJS) -lncurses
@@ -19,13 +21,25 @@ doc: doc src/*.hpp
 run: $(PROG)
 	./$(PROG)
 
-all:
-	make -j 8
-	make doc
-
 compile:
 	make -j 8
 
+all:
+	compile
+	doc
+
+opendoc: doc
+	google-chrome doc/index.html
+
+count:
+	wc -l src/.cpp
+	wc -l src/.hpp
+
+valgrind: compile
+	valgrind ./$(PROG) 2>$(OUT)
+
 clean:
-	rm *.o $(PROG)
+	rm -f *.o $(PROG)
+	rm -f err
 	rm -rf doc
+	rm -rf .vscode

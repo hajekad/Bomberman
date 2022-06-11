@@ -51,8 +51,6 @@ void CAscii::render(std::vector<std::vector<CCell>> & _m)
         y++;
         x = 1;
     }
-
-    //if(!hasplayer) inMenu = 1;
     
     refresh();
     wrefresh(window);
