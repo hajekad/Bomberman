@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <random>
+#include <ncurses.h>
 
 #include "weapon.hpp"
 
@@ -10,6 +11,9 @@
 #define _ENEMY 'E'
 #define _MAX_SPEED_DIFF 5
 #define _MAX_SPEED 4
+
+#define _POSITION_HEIGHT 5
+#define _POSITION_WIDTH 3
 
 #define _UP 'w'
 #define _RIGHT 'd'
@@ -60,4 +64,6 @@ public:
     virtual std::shared_ptr<CWeapon> decideNextMove(char & _i, int playerAtCol, int playerAtLine,  std::vector<std::pair<int, int>> & _tA) = 0;
 
     virtual void change() = 0;
+
+    virtual const void draw(std::vector<std::vector<int>> & toBeDisplayed) = 0;
 };

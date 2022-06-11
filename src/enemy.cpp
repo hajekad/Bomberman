@@ -97,3 +97,26 @@ void CEnemy::change()
 {
     if(speed > _MAX_SPEED) speed--; // fastest playable speed
 }
+
+const void CEnemy::draw(std::vector<std::vector<int>> & toBeDisplayed)
+{
+    int _ib = 0;
+    int blocks[]
+    {
+        COLOR_RED, COLOR_RED,  COLOR_RED,
+        COLOR_RED, COLOR_CYAN, COLOR_CYAN,
+        COLOR_RED, COLOR_RED,  COLOR_RED,
+        COLOR_RED, COLOR_BLUE, COLOR_RED,
+        COLOR_RED, COLOR_BLUE, COLOR_RED
+    };
+
+    for(int renderLine = 0; renderLine < _POSITION_HEIGHT; renderLine++)
+    {
+        for(int renderColumn = 0; renderColumn < _POSITION_WIDTH; renderColumn++)
+        {
+            toBeDisplayed.at((line * _POSITION_HEIGHT) + renderLine).push_back(blocks[_ib]);
+            _ib++;
+        }
+    }
+
+}

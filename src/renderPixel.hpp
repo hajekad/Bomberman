@@ -4,13 +4,12 @@
 
 #include "renderer.hpp"
 
+#define _POSITION_HEIGHT 5
+#define _POSITION_WIDTH 3
+
 class CPixel : public CRender
 {
-private:
-    void player(int _l, int _c);
-    
-    void badGuy(int _l, int _c);
-    
+private:    
     void bomb(int _l, int _c);
     
     void free(int _l, int _c);

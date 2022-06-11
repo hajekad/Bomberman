@@ -64,7 +64,7 @@ void CPixel::render(std::vector<std::vector<CCell>> & _m)
     
     for(auto i = _m.begin(); i != _m.end(); i++)
     {
-        for(int j = 0; j < 5; j++)
+        for(int j = 0; j < _POSITION_HEIGHT; j++)
         {
             std::vector<int> tmp;
             toBeDisplayed.push_back(tmp);
@@ -73,33 +73,25 @@ void CPixel::render(std::vector<std::vector<CCell>> & _m)
         for(auto j = i->begin(); j != i->end(); j++)
         {
             if(j->currState == OCCUPIED)
-            {
-                if(j->occupiedBy.get()->characterType == PLAYER)
-                    player(5 * y, 3 * x);
-                else
-                    badGuy(5 * y, 3 * x);
-            }
+                j->occupiedBy.get()->draw(toBeDisplayed);
             else if(j->bomb != nullptr)
-            {
-                bomb(5 * y, 3 * x);
-            }
+                bomb(_POSITION_HEIGHT * y, _POSITION_WIDTH * x);
             else 
-            {
                 switch(j->currState)
                 {
                     case FREE:
-                        free(5 * y, 3 * x);
+                        free(_POSITION_HEIGHT * y, _POSITION_WIDTH * x);
                         break;
                     case DESTROYABLE:
-                        destroyable(5 * y, 3 * x);
+                        destroyable(_POSITION_HEIGHT * y, _POSITION_WIDTH * x);
                         break;
                     case UNBREAKABLE:
-                        unbreakable(5 * y, 3 * x);
+                        unbreakable(_POSITION_HEIGHT * y, _POSITION_WIDTH * x);
                         break;
 
                     default: break;
                 }
-            }
+
             x++;
         }
         y++;
@@ -107,51 +99,6 @@ void CPixel::render(std::vector<std::vector<CCell>> & _m)
     }
     
     draw();
-}
-
-void CPixel::player(int _l, int _c)
-{
-    int _ib = 0;
-    int blocks[]
-    {
-        COLOR_MAGENTA, COLOR_MAGENTA, COLOR_MAGENTA,
-        COLOR_CYAN,    COLOR_CYAN,    COLOR_MAGENTA,
-        COLOR_MAGENTA, COLOR_MAGENTA, COLOR_MAGENTA,
-        COLOR_MAGENTA, COLOR_BLUE, COLOR_MAGENTA,
-        COLOR_MAGENTA, COLOR_BLUE, COLOR_MAGENTA
-    };
-
-    for(int renderLine = 0; renderLine < 5; renderLine++)
-    {
-        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
-        {
-            toBeDisplayed.at(_l + renderLine).push_back(blocks[_ib]);
-            _ib++;
-        }
-    }
-
-}
-
-void CPixel::badGuy(int _l, int _c)
-{
-    int _ib = 0;
-    int blocks[]
-    {
-        COLOR_RED, COLOR_RED,  COLOR_RED,
-        COLOR_RED, COLOR_CYAN, COLOR_CYAN,
-        COLOR_RED, COLOR_RED,  COLOR_RED,
-        COLOR_RED, COLOR_BLUE, COLOR_RED,
-        COLOR_RED, COLOR_BLUE, COLOR_RED
-    };
-
-    for(int renderLine = 0; renderLine < 5; renderLine++)
-    {
-        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
-        {
-            toBeDisplayed.at(_l + renderLine).push_back(blocks[_ib]);
-            _ib++;
-        }
-    }
 }
 
 void CPixel::bomb(int _l, int _c)
@@ -166,9 +113,9 @@ void CPixel::bomb(int _l, int _c)
         COLOR_BLACK, COLOR_BLACK, COLOR_BLACK
     };
 
-    for(int renderLine = 0; renderLine < 5; renderLine++)
+    for(int renderLine = 0; renderLine < _POSITION_HEIGHT; renderLine++)
     {
-        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
+        for(int renderColumn = 0; renderColumn < _POSITION_WIDTH; renderColumn++)
         {
             toBeDisplayed.at(_l + renderLine).push_back(blocks[_ib]);
             _ib++;
@@ -178,17 +125,17 @@ void CPixel::bomb(int _l, int _c)
 
 void CPixel::free(int _l, int _c)
 {
-    for(int renderLine = 0; renderLine < 5; renderLine++)
-        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
+    for(int renderLine = 0; renderLine < _POSITION_HEIGHT; renderLine++)
+        for(int renderColumn = 0; renderColumn < _POSITION_WIDTH; renderColumn++)
             toBeDisplayed.at(_l + renderLine).push_back(COLOR_BLUE);
 }
 
 void CPixel::destroyable(int _l, int _c)
 {
     int cnt = 0;
-    for(int renderLine = 0; renderLine < 5; renderLine++)
+    for(int renderLine = 0; renderLine < _POSITION_HEIGHT; renderLine++)
     {
-        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
+        for(int renderColumn = 0; renderColumn < _POSITION_WIDTH; renderColumn++)
         {
             if(cnt % 2) toBeDisplayed.at(_l + renderLine).push_back(COLOR_BLUE);
             else toBeDisplayed.at(_l + renderLine).push_back(COLOR_BLACK);
@@ -200,7 +147,7 @@ void CPixel::destroyable(int _l, int _c)
 
 void CPixel::unbreakable(int _l, int _c)
 {
-    for(int renderLine = 0; renderLine < 5; renderLine++)
-        for(int renderColumn = 0; renderColumn < 3; renderColumn++)
+    for(int renderLine = 0; renderLine < _POSITION_HEIGHT; renderLine++)
+        for(int renderColumn = 0; renderColumn < _POSITION_WIDTH; renderColumn++)
             toBeDisplayed.at(_l + renderLine).push_back(COLOR_BLACK);
 }

@@ -67,3 +67,26 @@ void CPlayer::change()
     if(rand) changeRange(rand);
     else changeTTE();
 }
+
+const void CPlayer::draw(std::vector<std::vector<int>> & toBeDisplayed)
+{
+    int _ib = 0;
+    int blocks[]
+    {
+        COLOR_MAGENTA, COLOR_MAGENTA, COLOR_MAGENTA,
+        COLOR_CYAN,    COLOR_CYAN,    COLOR_MAGENTA,
+        COLOR_MAGENTA, COLOR_MAGENTA, COLOR_MAGENTA,
+        COLOR_MAGENTA, COLOR_BLUE, COLOR_MAGENTA,
+        COLOR_MAGENTA, COLOR_BLUE, COLOR_MAGENTA
+    };
+
+    for(int renderLine = 0; renderLine < _POSITION_HEIGHT; renderLine++)
+    {
+        for(int renderColumn = 0; renderColumn < _POSITION_WIDTH; renderColumn++)
+        {
+            toBeDisplayed.at((line * _POSITION_HEIGHT) + renderLine).push_back(blocks[_ib]);
+            _ib++;
+        }
+    }
+
+}
