@@ -58,3 +58,5 @@ Polymorfysmus:
     Společné metody childu budou například move - kdy se charakter posune o 1 pozici do zadaného směru
                                            -perish() - smrt charaktera.
     Navic kod vyuziva C-like static cast pro praci s nimi.
+
+    Dalsi vyuziti polymoforfismu je pro tridu render, pomoci ktere se da menit vzhled UI.
