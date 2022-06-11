@@ -21,7 +21,6 @@ void CPixel::draw()
     {
         for(auto j: *i)
         {
-            std::cerr << j << std::endl;
             wmove(window, _l, _c);
 
             start_color();

@@ -2,10 +2,10 @@ PROG		:= hajekad3
 
 CXX 		:= g++
 
-LD_FLAGS 	:= -Wall --pedantic -std=c++14
+LD_FLAGS 	:= -Wall --pedantic -std=c++14 -O2
 CXX_FLAGS	:= $(LD_FLAGS) -c
 
-out			:= err
+OUT			:= err
 
 OBJS 		:= main.o cell.o world.o gameLoop.o vigilante.o menu.o character.o player.o enemy.o weapon.o renderer.o renderAscii.o renderPixel.o
  
@@ -36,7 +36,7 @@ count:
 	wc -l src/.hpp
 
 valgrind: compile
-	valgrind ./$(PROG) 2>$(OUT)
+	valgrind ./$(PROG) 2> $(OUT)
 
 clean:
 	rm -f *.o $(PROG)

@@ -12,7 +12,6 @@ std::shared_ptr<CWeapon> CPlayer::placeBomb()
 {
     if(placedBomb)
     {
-        std::cerr << "BOMB\n";
         std::shared_ptr<CWeapon> _c;
         _c = std::make_shared<CWeapon>(range, tTE,line, column);
         currBomb = _c;
