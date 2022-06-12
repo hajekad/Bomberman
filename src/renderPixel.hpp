@@ -18,6 +18,8 @@ private:
     
     void unbreakable(int _l, int _c);
 
+    void bonus(int _l, int _c);
+
     void draw();
 
     std::vector<std::vector<int>> toBeDisplayed;

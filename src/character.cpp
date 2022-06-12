@@ -12,6 +12,7 @@ CCharacter::CCharacter(char _s)
     stayed = false;
     iH = 0;
     score = 0;
+    alive = true;
 
 }
 

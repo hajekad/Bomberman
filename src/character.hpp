@@ -49,6 +49,7 @@ public:
 
     int score;
 
+    bool alive;
     /**
      * @param _s stands for skin
      * @return void return value;

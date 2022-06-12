@@ -57,6 +57,7 @@ void CWorld::parseD(std::vector<std::pair<int, int>> & _d)
 void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCharacter> _p)
 {
     parseD(_d);
+    std::vector<std::vector<std::shared_ptr<CCharacter>>::iterator> toDelete;
 
     for(auto i = _d.begin(); i != (_d.end()); i++)
     {
@@ -68,13 +69,15 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCha
             if(_c->currState == OCCUPIED || (_c->currState == BOMB && _c->occupiedBy != nullptr))
             {
                 if(_p != nullptr) _p.get()->score += _MORE_SCORE;
+
                 for(auto j = characters.begin(); j != characters.end(); j++)
                 {
                     if((j->get()->line == i->first) && (j->get()->column == i->second))
                     {
                         //std::vector<std::pair<int, int>> toAttackTwo;
                         //destroy(toAttackTwo, *j);
-                        characters.erase(j);
+                        j->get()->alive = false;
+                        //toDelete.push_back(j);
                         break;
                     }
                 }
@@ -90,6 +93,9 @@ void CWorld::destroy(std::vector<std::pair<int, int>> & _d, std::shared_ptr<CCha
             }
         }
     }
+
+    //for(auto i : toDelete)
+    //    characters.erase(i);
 }
 
 int CWorld::update(char _i)
@@ -138,54 +144,63 @@ int CWorld::update(char _i)
 
         if(!toAttack.empty()) destroy(toAttack, *_ic);
 
-        ///plants the bomb
-        if(newBomb != nullptr)
+        if(_ic->get()->alive)
         {
-            worldMap.at(_ic->get()->line).at(_ic->get()->column).bomb = newBomb;
-            worldMap.at(_ic->get()->line).at(_ic->get()->column).currState = BOMB;
-        }
-
-        ///provides new desired coordinates
-        switch(_i)
-        {
-            case _UP: newLine--; break;
-            case _LEFT: newCol--; break;
-            case _DOWN: newLine++; break;
-            case _RIGHT: newCol++; break;
-
-            default: break;
-        }
-
-        ///moves the history iterator
-        _ic->get()->hist[(_ic->get()->iH)] = newCol + newLine;
-        (_ic->get()->iH)++;
-        (_ic->get()->iH) %= _PANIC_ARRAY_SIZE;
-
-        ///actually moves the character and updates the world map
-        if((worldMap.at(newLine).at(newCol).currState == FREE) && ((newLine != _ic->get()->line) || newCol != _ic->get()->column))
-        {
-            worldMap.at(newLine).at(newCol).occupiedBy = *_ic;
-            worldMap.at(newLine).at(newCol).texture = _ic->get()->skin;
-            worldMap.at(newLine).at(newCol).currState = OCCUPIED;
-
-            worldMap.at(_ic->get()->line).at(_ic->get()->column).occupiedBy = nullptr;
-            worldMap.at(_ic->get()->line).at(_ic->get()->column).texture = ' ';
-            worldMap.at(_ic->get()->line).at(_ic->get()->column).currState = FREE;
-
-            _ic->get()->line = newLine;
-            _ic->get()->column = newCol;
-
-            if(worldMap.at(newLine).at(newCol).hasBonus)
+            ///plants the bomb
+            if(newBomb != nullptr)
             {
-                worldMap.at(newLine).at(newCol).hasBonus = 0;
-                worldMap.at(newLine).at(newCol).texture = _FREE;
-
-                _ic->get()->change();
+                worldMap.at(_ic->get()->line).at(_ic->get()->column).bomb = newBomb;
+                worldMap.at(_ic->get()->line).at(_ic->get()->column).currState = BOMB;
             }
+
+            ///provides new desired coordinates
+            switch(_i)
+            {
+                case _UP: newLine--; break;
+                case _LEFT: newCol--; break;
+                case _DOWN: newLine++; break;
+                case _RIGHT: newCol++; break;
+
+                default: break;
+            }
+
+            ///moves the history iterator
+            _ic->get()->hist[(_ic->get()->iH)] = newCol + newLine;
+            (_ic->get()->iH)++;
+            (_ic->get()->iH) %= _PANIC_ARRAY_SIZE;
+
+            ///actually moves the character and updates the world map
+            if((worldMap.at(newLine).at(newCol).currState == FREE) && ((newLine != _ic->get()->line) || newCol != _ic->get()->column))
+            {
+                worldMap.at(newLine).at(newCol).occupiedBy = *_ic;
+                worldMap.at(newLine).at(newCol).texture = _ic->get()->skin;
+                worldMap.at(newLine).at(newCol).currState = OCCUPIED;
+
+                worldMap.at(_ic->get()->line).at(_ic->get()->column).occupiedBy = nullptr;
+                worldMap.at(_ic->get()->line).at(_ic->get()->column).texture = ' ';
+                worldMap.at(_ic->get()->line).at(_ic->get()->column).currState = FREE;
+
+                _ic->get()->line = newLine;
+                _ic->get()->column = newCol;
+
+                if(worldMap.at(newLine).at(newCol).hasBonus)
+                {
+                    worldMap.at(newLine).at(newCol).hasBonus = 0;
+                    worldMap.at(newLine).at(newCol).texture = _FREE;
+
+                    _ic->get()->change();
+                }
+            }
+            else if((worldMap.at(newLine).at(newCol).currState == OCCUPIED)
+                    && ((newLine != _ic->get()->line) || newCol != _ic->get()->column)
+                    && (worldMap.at(newLine).at(newCol).occupiedBy.get()->characterType == PLAYER)) return 1; // player bumped into a living thing and died
         }
-        else if((worldMap.at(newLine).at(newCol).currState == OCCUPIED)
-                && ((newLine != _ic->get()->line) || newCol != _ic->get()->column)
-                && (worldMap.at(newLine).at(newCol).occupiedBy.get()->characterType == PLAYER)) return 1; // player bumped into a living thing and died
+        else
+        {
+            auto copy = _ic;
+            _ic--;
+            characters.erase(copy);
+        }
     }
 
     ///returns to menu

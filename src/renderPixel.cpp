@@ -10,6 +10,7 @@ void CPixel::draw()
     wclear(window);
     init_pair(0, COLOR_GREEN, COLOR_BLACK);
     init_pair(1, COLOR_GREEN, COLOR_RED);
+    init_pair(2, COLOR_BLACK, COLOR_GREEN);
     init_pair(3, COLOR_GREEN, COLOR_YELLOW);
     init_pair(4, COLOR_GREEN, COLOR_BLUE);
     init_pair(5, COLOR_GREEN, COLOR_MAGENTA);
@@ -76,6 +77,8 @@ void CPixel::render(std::vector<std::vector<CCell>> & _m)
                 j->occupiedBy.get()->draw(toBeDisplayed);
             else if(j->bomb != nullptr)
                 bomb(_POSITION_HEIGHT * y, _POSITION_WIDTH * x);
+            else if(j->hasBonus)
+                bonus(_POSITION_HEIGHT * y, _POSITION_WIDTH * x);
             else 
                 switch(j->currState)
                 {
@@ -91,7 +94,7 @@ void CPixel::render(std::vector<std::vector<CCell>> & _m)
 
                     default: break;
                 }
-
+                
             x++;
         }
         y++;
@@ -111,6 +114,28 @@ void CPixel::bomb(int _l, int _c)
         COLOR_BLACK, COLOR_BLACK,  COLOR_BLACK,
         COLOR_BLACK, COLOR_BLACK, COLOR_BLACK,
         COLOR_BLACK, COLOR_BLACK, COLOR_BLACK
+    };
+
+    for(int renderLine = 0; renderLine < _POSITION_HEIGHT; renderLine++)
+    {
+        for(int renderColumn = 0; renderColumn < _POSITION_WIDTH; renderColumn++)
+        {
+            toBeDisplayed.at(_l + renderLine).push_back(blocks[_ib]);
+            _ib++;
+        }
+    }
+}
+
+void CPixel::bonus(int _l, int _c)
+{
+    int _ib = 0;
+    int blocks[]
+    {
+        COLOR_BLUE, COLOR_RED,  COLOR_BLUE,
+        COLOR_RED, COLOR_YELLOW, COLOR_RED,
+        COLOR_BLUE, COLOR_RED,  COLOR_BLUE,
+        COLOR_BLUE, COLOR_GREEN, COLOR_GREEN,
+        COLOR_BLUE, COLOR_GREEN, COLOR_BLUE
     };
 
     for(int renderLine = 0; renderLine < _POSITION_HEIGHT; renderLine++)
